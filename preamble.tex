@@ -1,0 +1,349 @@
+% ---- RANDOM FORMATTING ---- %
+\setlength{\parindent}{0pt}
+%\renewcommand{\thesection}{\Roman{section}} 
+
+
+% ---- PACKAGES ---- %
+\usepackage[margin=2cm]{geometry}
+\usepackage{tikz} % graphs
+\usepackage{tikz-cd} % commutative diagrams
+\usetikzlibrary{decorations.pathreplacing} % for curly braces 
+\usetikzlibrary{arrows,shapes,positioning,calc}
+\usetikzlibrary{decorations.markings}
+\usepackage{amsmath} % ams lot
+\usepackage{amsthm} 
+\usepackage{amssymb}
+\usepackage{parallel}
+\usepackage[normalem]{ulem} % this is for a stupid joke in my Galois representations notes
+\usepackage{bbm} % blackboard bold numbers
+%\usepackage{mathpazo} % for blackboard bold
+%\usepackage{amsfonts}
+%\usepackage{mathabx}
+%\usepackage{MnSymbol}
+%\usepackage{newpxtext} % font
+%\usepackage{tgpagella} % font
+\usepackage{epigrafica} % font
+\usepackage{fourier} % font
+%\usepackage{mathptmx} % maths font
+%\usepackage{txfonts} % font
+\usepackage[bb=ams, cal=cm, scr=rsfs, bbsymbols, calscaled=.96, bbscaled=.96]{mathalpha} % sets the calligraphic to mathcal, scr to rsfs, and blackboard bold to ams
+\NewCommandCopy{\pazomathbb}{\mathbb} % if using fourier, this and the line above stop it from using the horrible looking fourier bb font
+\AtBeginDocument{\RenewCommandCopy{\mathbb}{\pazomathbb}} % ^
+\usepackage{enumerate} % fancy labelling for lists 
+% \usepackage{enumitem} % resuming lists - CLASHES WITH ABOVE
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\usepackage{float}
+\usepackage{caption} % i do not entirely know -- some latex on stackexchange taught me how to do side-by-side figures
+\usepackage{subcaption}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[most]{tcolorbox} % for fancy boxes
+\tcbuselibrary{skins,breakable,theorems} % this is for fancy box formatting
+\usepackage{fontawesome}
+%\usepackage[sc]{titlesec} % smallcaps section headings
+\usepackage{imakeidx} % index generator
+\makeindex
+
+\usepackage[hidelinks]{hyperref} % clicky links
+
+% ---- TIKZ ---- %
+\usepackage{tikz}
+
+\usetikzlibrary{arrows,shapes,positioning}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{fadings,patterns}
+
+% SNAKE ARROWS STYLE! The argument is the angle
+\tikzcdset{snaky/.style={rounded corners,to path={[rotate=#1] -- ($(\tikztostart.#1)+(2ex,0)$)%
+ -- ({$(\tikztostart.#1)+(2ex,0)$} |- {$0.5*(\tikztostart)+0.5*(\tikztotarget)$})%
+ -- ({$(\tikztotarget.\number\numexpr 180+(#1) \relax)+(-2ex,0)$} |- {$0.5*(\tikztostart)+0.5*(\tikztotarget)$}) \tikztonodes%
+ -- ($(\tikztotarget.{\number\numexpr 180+(#1) \relax})+(-2ex,0)$)%
+ -- (\tikztotarget)}}}
+
+
+\tikzstyle arrowstyle=[scale=1]
+\tikzstyle directed=[postaction={decorate,decoration={markings, mark=at position .6 with {\arrow[arrowstyle]{stealth}}}}]
+\tikzstyle Node=[circle, draw=black, fill=black!10]
+
+\pgfplotsset{compat=1.18}
+
+
+% ---- COMMANDS ---- %
+% mathbb commands
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Pruf}{\mathbb{D}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\bbG}{\mathbb{G}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Hyp}{\mathbb{H}}
+\newcommand{\Uni}{\mathbb{U}\mathrm{ni}}
+\newcommand{\Gm}{\bbG_{\mathrm{m}}}
+\newcommand{\Ga}{\bbG_{\mathrm{a}}}
+\newcommand{\triv}{\mathbbm{1}}
+
+% mathcal/mathscr commands
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\Hopf}{\mathscr{H}}
+\newcommand{\GHopf}{\mathscr{G}}
+\newcommand{\GLHopf}{\mathscr{G\!l}\!}
+\newcommand{\SLHopf}{\mathscr{S\!l}\!}
+\newcommand{\inducedop}[2][A]{{#2}_{|_{#1}}}
+\newcommand{\ints}{\mathcal{O}}
+\newcommand{\Autforms}{\mathcal{A}}
+\newcommand{\modforms}{\mathcal{M}}
+\newcommand{\cuspforms}{\mathcal{S}}
+\newcommand{\Ell}{\mathcal{L}}
+\newcommand{\Hilb}{\mathcal{H}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calQ}{\mathcal{Q}}
+\newcommand{\scrR}{\mathscr{R}}
+
+% mathbf/boldsymbol commands
+\newcommand{\Set}{\mathbf{Set}}         % (Set)s
+\newcommand{\Grp}{\mathbf{Grp}}         % (Gr)ou(p)s
+\newcommand{\Vect}{\mathbf{Vect}}       % (Vect)or spaces
+\newcommand{\Mod}{\mathbf{Mod}}         % (Mod)ules
+\newcommand{\CRing}{\mathbf{CRing}}     % (C)ommutative (Ring)s
+\newcommand{\CAlg}{\mathbf{CAlg}}		% (C)ommutative (Alg)ebras
+\newcommand{\Sep}{\mathbf{Sep}}         % (Sep)arable field extensions
+\newcommand{\bfrho}{\boldsymbol{\rho}}  % universal deformation
+\newcommand{\bfchi}{\boldsymbol{\chi}}  % universal character
+
+
+% mathrm commands
+\newcommand{\Gal}{\mathrm{Gal}} % (Gal)ois group
+\newcommand{\Sel}{\mathrm{Sel}} % (Sel)mer group
+\newcommand{\Hom}{\mathrm{Hom}} % (Hom)set
+\newcommand{\End}{\mathrm{End}} % (End)omorphisms
+\newcommand{\Aut}{\mathrm{Aut}} % (Aut)omorphisms
+\newcommand{\Frob}{\mathrm{Frob}} % (Frob)enius elements
+\newcommand{\Frat}{\mathrm{Frat}} % (Frat)tini quotient
+\newcommand{\Rep}{\mathrm{Rep}} % category of (Rep)resentations
+\newcommand{\Def}{\mathrm{Def}} % (Def)ormation functor
+\newcommand{\DefQ}{\Def_{\calQ}} % (Def)ormation functor with property (Q)
+\newcommand{\Irr}{\mathrm{Irr}} % (Irr)educibles
+\newcommand{\Isom}{\mathrm{Isom}} % (Isom)etries
+\newcommand{\Ext}{\mathrm{Ext}} % (Ext)ensions
+\newcommand{\Cl}{\mathrm{Cl}} % (Cl)ass group
+\newcommand{\K}{\mathrm{K}} % K theory
+\newcommand{\cohom}{\mathrm{H}} % co(H)omology
+\newcommand{\res}{\mathrm{res}} % (res)triction
+\newcommand{\Res}{\mathrm{Res}} % (Res)triction -- capitalised for rep theory
+\newcommand{\cores}{\mathrm{cores}} % (cores)triction
+\newcommand{\Ind}{\mathrm{Ind}} % (Ind)uction
+\newcommand{\ab}{\mathrm{ab}} % (ab)elianisation
+\newcommand{\rad}{\mathrm{R}} % (R)adical (algebraic groups)
+\newcommand{\unip}[1]{{#1}_{\mathrm{u}}} % (u)nipotent (subscript)
+\newcommand{\uniprad}{\mathrm{R}_{\mathrm{u}}} % unipotent radical
+\newcommand{\Pgp}{\mathrm{P}} % P (projection to (P)GL)
+\newcommand{\Special}{\mathrm{S}} % S (intersection with (S)L)
+\newcommand{\GL}{\mathrm{GL}} % classical groups below
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\PSL}{\Pgp\SL}
+\renewcommand{\O}{\mathrm{O}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\Gr}{\mathrm{Gr}} % (Gr)assmannian
+\newcommand{\Spec}{\mathrm{Spec}} % Affine scheme
+\newcommand{\Spf}{\mathrm{Spf}} % Formal scheme
+\newcommand{\Proj}{\mathrm{Proj}} % (Proj)ective affine scheme
+\newcommand{\Frac}{\mathrm{Frac}} % Field of (Frac)tions
+\newcommand{\ev}{\mathrm{ev}} % (ev)aluation map
+\newcommand{\coker}{\mathrm{coker}} % (coker)nel
+\newcommand{\im}{\mathrm{im}} % (im)age
+\newcommand{\tr}{\mathrm{tr}} % (tr)ace
+\newcommand{\lcm}{\mathrm{lcm}} % (l)east (c)ommon (m)ultiple
+\newcommand{\trans}{\mathrm{trf}} % (tr)ans(f)er map
+\newcommand{\norm}{\mathrm{N}} % (N)orm map
+\newcommand{\milnor}{\mathrm{M}} % (M)ilnor (superscript for K-theory)
+\newcommand{\nr}{\mathrm{nr}} % u(nr)amified
+\newcommand{\et}{\mathrm{\acute{e}t}} % (ét)ale
+\newcommand{\Char}{\mathrm{char}} % (char)acteristic of a ring
+\newcommand{\Ad}{\mathrm{Ad}} % (Ad)joint representation
+
+
+% mathfrak commands
+\newcommand{\ratfuncs}{\mathfrak{K}}
+\newcommand{\Liealg}{\mathfrak{g}}
+\newcommand{\eideal}{\mathfrak{e}}
+\newcommand{\hyperb}{\mathfrak{H}}
+\newcommand{\prid}{\mathfrak{p}}
+\newcommand{\mxid}{\mathfrak{m}}
+\newcommand{\nxid}{\mathfrak{n}}
+\newcommand{\qprid}{\mathfrak{q}}
+\newcommand{\Prid}{\mathfrak{P}}
+\newcommand{\ideal}{\trianglelefteq}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\cl}{\mathrm{cl}}
+
+
+\newcommand{\mono}{\hookrightarrow}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\iso}{\stackrel{\sim}{\smash{\longrightarrow}\rule{0pt}{0.4ex}}}
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ot}{\leftarrow}
+\newcommand{\oT}{\Leftarrow}
+\newcommand{\actson}{\circlearrowright}
+\makeatletter
+\newcommand{\xRightarrow}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
+\makeatother
+
+\newcommand{\gen}[1]{\left\langle#1\right\rangle}
+\newcommand{\ggen}[1]{\left\langle\!\left\langle #1\right\rangle\!\right\rangle}
+\newcommand{\stein}[1]{\left\{ #1 \right\}}
+\newcommand{\sstein}[1]{\stein{\!\!\stein{ #1 }\!\!}}
+\newcommand{\ssstein}[1]{\stein{\!\!\sstein{-,-}\!\!}}
+\newcommand{\sqbrack}[1]{\left[#1\right]}
+\newcommand{\ssqbrack}[1]{\left\llbracket#1\right\rrbracket}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\aabs}[1]{\left|\!\left| #1 \right|\!\right|}
+
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\bemph}[1]{\textcolor{RubineRed}{\emph{#1}}}
+\newcommand{\smallfrac}[2]{{\textstyle \frac{#1}{#2}}}
+\newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
+
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\quickmatrix}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+
+\newcommand{\congr}{\mathrm{cg}}
+\newcommand{\cgsubgp}{\leq_{\congr}}
+
+\newcommand{\ch}{\mathrm{ch}}
+
+\newcommand{\BS}{\mathrm{BS}} % Borel-Serre compact'n
+\newcommand{\Exc}{\textcolor{RubineRed}{$\ast$} \textbf{Exc}} % exercise marker
+
+% Defines \Sha
+\usepackage[T2A,T1]{fontenc} % the latter two options are for epigrafica (LGR,OT1) -- IF USING FOURIER PACKAGE, DON'T USE OT1
+\DeclareSymbolFont{cyrillic}{T2A}{cmr}{m}{n}
+\DeclareMathSymbol{\Sha}{\mathalpha}{cyrillic}{216}
+
+% this bit does xleftrightarrow
+\makeatletter
+\newcommand\xleftrightarrow[2][]{%
+  \ext@arrow 9999{\longleftrightarrowfill@}{#1}{#2}}
+\newcommand\longleftrightarrowfill@{%
+  \arrowfill@\leftarrow\relbar\rightarrow}
+\makeatother
+
+
+\renewcommand{\C}{\mathbb{C}} % these have to be here because fontenc fucks with them
+\renewcommand{\U}{\mathrm{U}}
+\renewcommand{\mod}[1]{\,\,\mathrm{mod}\,\, #1}
+
+% Source - https://tex.stackexchange.com/a
+% Posted by AboAmmar, modified by community. See post 'Timeline' for change history
+% Retrieved 2026-01-14, License - CC BY-SA 4.0
+
+%\numberwithin{equation}{section}
+
+
+% THIS IS SOME LATEX MAGIC THAT LETS YOU REFER TO CUSTOM ITEMIZE LABELS USING HYPERREF
+% to use, use \item[\nameditem{ref:erence}{LABEL}] in an itemize environment
+% this renders as `LABEL blah blah blah' and is referenced by \ref{ref:erence}
+\makeatletter
+\def\nameditem#1#2{\begingroup
+	#2%
+	\def\@currentlabel{#2}%
+	\phantomsection\label{#1}\endgroup
+}
+% Source - https://tex.stackexchange.com/a/730517/432002, Yerasito
+
+
+% ---- AMSTHM ENVs ---- %
+\newcommand{\newmarkedtheorem}[1]{%
+  \newenvironment{#1}
+	{%
+	  \renewcommand{\qedsymbol}{\ensuremath{\diamondsuit}} % this makes the end symbol of an eg into a diamond
+	  \pushQED{\qed}\csname inner@#1\endcsname
+	}
+	{\popQED\csname endinner@#1\endcsname}%
+  \newtheorem{inner@#1}%
+}
+
+\theoremstyle{definition}
+\newtheorem{DEFN}{Definition}[section]
+\newtheorem{prop}[DEFN]{Proposition}
+\newtheorem{lemma}[DEFN]{Lemma}
+\newmarkedtheorem{eg}[DEFN]{Example}
+\newmarkedtheorem{noneg}[DEFN]{Non-example}
+\newtheorem*{rmk}{Remark}
+\newtheorem{cor}{Corollary}[DEFN]
+\newtheorem*{redcor}{\textcolor{RubineRed}{Corollary}}
+
+\theoremstyle{plain}
+\newtheorem{THM}[DEFN]{Theorem}
+%\newtheorem{conj}[DEFN]{Conjecture}
+\newtheorem{ax}{Axiom}
+
+% fancy definitions
+\newtcolorbox{DEFNbox}{
+	sharp corners,
+	breakable,
+	top=.35cm,
+	bottom=.25cm,
+	left=.35cm,
+	right=.35cm,
+	colback=black!5!white,
+	boxrule=-1pt,
+	leftrule=3pt,
+	colframe=blue!40!red,
+	before skip=\topsep,
+	after skip=\topsep,
+	fonttitle=\large\bfseries\sffamily,
+	enhanced,
+}
+
+\newtcolorbox{THMbox}{
+	sharp corners,
+	breakable,
+	top=.35cm,
+	bottom=.25cm,
+	left=.35cm,
+	right=.35cm,
+	colback=black!5!white,
+	boxrule=-1pt,
+	leftrule=3pt,
+	colframe=RubineRed,
+	before skip=\topsep,
+	after skip=\topsep,
+	fonttitle=\large\bfseries\sffamily,
+	enhanced,
+}
+
+\newtcolorbox{conj}[1]{
+	sharp corners,
+	breakable,
+	boxrule=-1pt,
+	colframe=blue!40!white,
+	top=.25cm,
+    bottom=.25cm,
+    left=.35cm,
+    right=.35cm,
+	leftrule=3pt,
+	title=\faQuestionCircleO \,\,\emph{#1},
+    fonttitle=\large\bfseries\sffamily,
+	enhanced,
+	coltitle=white,
+	colback=black!5!white,
+	attach boxed title to top left={xshift=1pt, yshift=-.1cm},
+	boxed title style={colback=blue!40!white, boxrule=-1pt, sharp corners}
+}
+
+\newenvironment{defn}{\leavevmode\begin{DEFNbox}\begin{DEFN}\vspace{-.15cm}}{\end{DEFN}\end{DEFNbox}\leavevmode}
+\newenvironment{thm}[1][]{\leavevmode\begin{THMbox}\begin{THM}[#1]\vspace{-.15cm}}{\end{THM}\end{THMbox}\leavevmode}
+
+\DeclareMathVersion{normal2} % this is to fix a "too many math alphabets" problem

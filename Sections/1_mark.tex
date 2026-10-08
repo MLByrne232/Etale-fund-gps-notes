@@ -1,0 +1,127 @@
+\section{Motivation and examples (Mark)}
+\label{sec:1_motivation_mark}
+\subsection{Fundamental groups and covers: the classical case}
+\label{subsec:1_1_pi1_covers}
+Let $X$ be a topological space. One historically important problem is that of classifying the \emph{covering spaces} of $X$.
+
+\begin{defn}
+	Suppose $X$ and $Y$ are topological spaces. A continuous map $p:Y \to X$ is called a \bemph{cover} if for all $x \in X$, there is an open neighbourhood $U_x \subseteq X$ of $x$ whose preimage decomposes as a disjoint union of homeomorphic copies of $U_x$, that is, we may decompose
+	\[
+		p^{-1} [U_x] = \coprod_{i \in I} V_{x, i}
+	\]
+	with each $V_{x,i} \subseteq Y$ open and $p|_{V_{x,i}} : V_{x,i} \iso U_x$ a homeomorphism. We say that $Y$ is a \bemph{covering space} for $X$. If $X$ and $Y$ are additionally pointed (i.e. have distinguished basepoints $x_0 \in X, y_0 \in Y$), and the cover $p: (Y, y_0) \to (X, x_0)$ satisfies $p(y_0) = x_0$, we may say that $(Y, y_0)$ is a \bemph{pointed covering space} of $(X, x_0)$.
+\end{defn}
+
+These covering spaces of $X$ define a category $\Cov(X)$, whose morphisms are continuous maps $Y_1 \to Y_2$ commuting with the covers $p_i : Y_i \to X$. We will write $\FinCov(X)$ for the full subcategory of finite covers, and $\Cov_*(X, x_0)$ for the subcategory of pointed covers (with pointed morphisms). \\
+
+One notable property of covering spaces is the \emph{homotopy lifting property}: that given a homotopy $\{f_t :Z \to Y\}_{t \in [0,1]}$ of maps based in $X$, and a lift $g_0$ of $f_0$ through $p: Y \to X$, there exists a unique homotopy $\{\hat{f}_t : Z \to Y\}_{t \in [0,1]}$ lifting $\{f_t\}_t$ through $p: Y \to X$ such that $\hat{f}_0 = g_0$. \\
+
+As a consequence of the homotopy lifting property, their fibres admit a \emph{monodromy action}: given a cover $p: Y \to X$ and some $x_0 \in X$, the fibre $p^{-1}(x_0) \subseteq Y$ is a discrete subspace. Given a point $y \in p^{-1}(x)$ and some class $[\alpha] \in \pi_1 (X, x_0)$, which we recall is a strong homotopy equivalence class of loops in $X$ based at $x_0$, any representative $\alpha : [0,1] \to X$ lifts to a unique $\hat{\alpha}_y:[0,1] \to Y$ starting at $y$ whose strong homotopy class depends only on the strong homotopy class $[\alpha]$. Thus the endpoint $\hat{\alpha}_y(1)$ does not depend on the choice of lift, and we define $[\alpha] \cdot y := \hat{\alpha}_y(1)$. \\
+
+So we can think of the taking the fibre at $x_0$ as a functor 
+\[
+	\Fib_{x_0} : \Cov(X) \to \pi_1(X, x_0)\textrm{-}\Set
+\]
+from the category of covering spaces of $X$ to the category of $\pi_1(X,x_0)$-sets, i.e. discrete sets with an action of $\pi_1(X, x_0)$. As it turns out, when $X$ is especially nice (path-connected, locally path-connected, and semilocally simply connected) this is a \emph{representable functor}, insomuchas 
+\[
+	\Fib_{x_0}(Y) \cong \Hom_{\Cov(X)}(\tilde{X}, Y)
+\]
+for some $\tilde{X} \in \Cov(X)$ unique up to isomorphism. Such $\tilde{X}$ is called a \bemph{universal covering space} for $X$, and may be constructed explicitly by choosing a basepoint $x_0 \in X$ and defining
+\[
+	\tilde{X}_{x_0} := \frac{\{\gamma : [0,1] \xrightarrow{\textrm{cts}} X \mid \gamma(0)=x_0\}}{\mathrm{homotopy}},\qquad \tilde{p} : \tilde{X}_{x_0} \to X;\,\, \gamma \mapsto \gamma(1).
+\]
+By definition, we see that $\Fib_{x_0}(\tilde{X}_{x_0}) = \pi_1 (X, x_0)$, and thus by universality we see 
+\[
+	\pi_1(X, x_0) \cong \Hom_{\Cov(X)}(\tilde{X}_{x_0}, \tilde{X}_{x_0}) = \Aut_{\Cov(X)}(\tilde{X}_{x_0})
+\]
+This final isomorphism is sometimes referred to as the \bemph{deck transformation construction}.
+
+\begin{thm}
+	\label{thm:galois_for_covers}
+	Pointed covers of a path-connected, locally path-connected, and semilocally simply connected pointed space $(X, x_0)$ are in bijection with subgroups of $\pi_1(X, x_0)$. To each $H \leq \pi_1(X, x_0)$ we associate $(\tilde{X}_{x_0} / H, Hx_0)$, and to each $p:(Y, y_0) \to (X, x_0)$ we associate $p_* \pi_1(Y, y_0) \leq \pi_1(X, x_0)$.
+\end{thm}
+
+The main idea of this reading group will be to define a sort of covering space theory for schemes, by way of the \emph{\'etale fundamental group}. But how do we do this?
+
+% double page thing here
+
+\newpage 
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+	\ParallelLText{
+		\textbf{Topological spaces}\\
+
+		$X$ a nice topological space\\
+		$p : Y \to X$ a topological cover\\ 
+		$x_0 \in X$ a point\\
+		$\pi_1(X, x_0)$ defined in terms of loops/paths\\
+		$\tilde{X} \to X$ universal cover (generally infinite degree)\\
+		$\pi_1(X, x_0) \cong \Aut(\tilde{X})$
+	}
+	\ParallelRText{
+		\textbf{Schemes}\\
+
+		$S$ a nice scheme\\
+		$\phi : X \to S$ a \bemph{finite \'etale cover}\\
+		$\overline{s_0} : \Spec(\Omega) \to S$ a \bemph{geometric point}\\
+		Paths are meaningless in Zariski!\\
+		$\tilde{S} \in \mathrm{pro}(\Fet_S)$ a \bemph{universal pro-object}\\
+		$\pi_1^{\et}(S, s_0) = \Aut(\tilde{X})$
+	}
+	\ParallelPar
+\end{Parallel}
+
+\leavevmode\\
+
+In fact for complex varieties $X_{/ \C}$ we will be able able to define both the classical fundamental group $\pi_1(X^\mathrm{an}, x_0)$ (considering its complex points $X(\C)$ canonically retopologised as a complex manifold $X^\mathrm{an}$) and the \'etale fundamental group $\pi_1^{\et}(X, \overline{x_0})$ (considering it as a scheme, where $\overline{x_0}$ is the geometric point induced by $x_0$), and in this case the two \emph{almost} coincide:
+\[
+	\pi_1^{\et}(X, \overline{x_0}) \cong \widehat{\pi_1}(X^\mathrm{an}, x_0),
+\]
+where the only difference is a profinite completion on the right, appearing since we are only considering \emph{finite} covers as we will see later.
+
+\subsection{An interesting coincidence}
+\label{subsec:1_2_Weil_rosetta_stone}
+One slightly more specific example which might motivate the need for a theory of \'etale covering space is the famous \emph{Weil Rosetta stone}. This is a set of strange coincidences between the theories of Riemann surfaces and of number fields that seem to suggest that both are offshoots of a more general theory (which will turn out to be our theory of the \'etale fundamental group). To state this, we first must define some things. We will start with the number fields setting.
+
+\subsubsection{A little bit of number theory}
+\label{subsubsec:1_2_1_number_fields}
+\begin{defn}
+	A \bemph{number field} $K$ is a finite field extension of $\Q$. That is, it is a field containing $\Q$ which is finite-dimensional as a $\Q$-vector space. Each number field $K$ admits a unique ring $\ints_K$ called its \bemph{ring of integers}, which is the integral closure of $\Z$ in $K$.
+\end{defn}
+
+In each extension $L/K$ of number fields, we can look at prime ideals $\prid$ of the ring of integers $\ints_K$ of $K$ (which we be called `primes of $K$' for short). Each such prime must factorise in $\ints_L$ as a unique product 
+\[
+	\prid\ints_L = \Prid_1^{e_1} \cdots \Prid_r^{e_r}
+\]
+of powers of primes $\Prid_i$ of $L$. We say that $\prid$ \bemph{ramifies} in $L/K$ if any of the $e_i > 1$, otherwise we say it is \bemph{unramified}.
+
+\begin{eg}
+	In the extension $\Q(i)/\Q$, the ideal $5\Z[i]$ factorises as $\gen{2+i}\gen{2-i}$, so $5$ is unramified. In contrast, the ideal $2 \Z[i]$ factorises as $\gen{1+i}^2$ since $(1+i)(1-i)=2$, so $2$ ramifies. 
+\end{eg}
+
+If a set $S$ of primes of $K$ contains all of the primes at which $L/K$ ramifies, we say that $L/K$ is \bemph{unramified away from $S$}, or just \bemph{$S$-unramified}.\\ 
+
+Given an algebraic closure $\ol{K}/K$, we can form the \bemph{maximal $S$-unramified extension} $K_S /K$ by taking the union of all finite subextensions $L/K$ of $\ol{K}/K$ which are $S$-unramified. Then we define the \bemph{$S$-unramified absolute Galois group} $G_{K, S}$ to be topological group
+\[
+	G_{K, S} := \Gal(K_S/K) := \varprojlim_{L / K} \Aut_K(L)
+\]
+where $L/K$ ranges over all finite, $S$-unramified extensions.
+
+\begin{thm}
+	The open subgroups of $G_{K,S}$ are in bijection with the set of finite, $S$-unramified extensions of $K$. An open subgroup $H$ is sent to its fixed field $K_S^H$, and a finite $S$-unramified extension $L/K$ is sent to the open subgroup $\Gal(K_S/L)$.
+\end{thm}
+
+\pagebreak
+
+\subsubsection{A little bit of complex geometry}
+\label{subsubsec:1_2_2_riemann_surfaces}
+\begin{defn}
+	A \bemph{Riemann surface} is a smooth complex manifold of dimension 1.
+\end{defn}
+
+We are interested in holomorphic maps between Riemann surfaces, so fix a surjective holomorphic map $\phi : Y \to X$. Interestingly, any such map is a finite topological cover away from a finite set of points of $X$, which are called the \bemph{ramification points} of $\phi$. If a discrete subset $S \subset X$ contains all of the ramification points of $\phi$, we say that $\phi$ is \bemph{unramified away from $S$}. \\
+
+If we consider \\
+
+Since any finite cover of a Riemann surface is itself a Riemann surface, Theorem \ref{thm:galois_for_covers} specialises in this case to give a specific correspondence.
+
+
