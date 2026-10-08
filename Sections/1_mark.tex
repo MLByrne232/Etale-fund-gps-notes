@@ -45,38 +45,29 @@ The main idea of this reading group will be to define a sort of covering space t
 
 % double page thing here
 
-\newpage 
-\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
-	\ParallelLText{
-		\textbf{Topological spaces}\\
-
-		$X$ a nice topological space\\
-		$p : Y \to X$ a topological cover\\ 
-		$x_0 \in X$ a point\\
-		$\pi_1(X, x_0)$ defined in terms of loops/paths\\
-		$\tilde{X} \to X$ universal cover (generally infinite degree)\\
-		$\pi_1(X, x_0) \cong \Aut(\tilde{X})$
-	}
-	\ParallelRText{
-		\textbf{Schemes}\\
-
-		$S$ a nice scheme\\
-		$\phi : X \to S$ a \bemph{finite \'etale cover}\\
-		$\overline{s_0} : \Spec(\Omega) \to S$ a \bemph{geometric point}\\
-		Paths are meaningless in Zariski!\\
-		$\tilde{S} \in \mathrm{pro}(\Fet_S)$ a \bemph{universal pro-object}\\
-		$\pi_1^{\et}(S, s_0) = \Aut(\tilde{X})$
-	}
-	\ParallelPar
-\end{Parallel}
+\begin{center}
+	\begin{tabular}{c|c}
+		\textbf{Topological spaces} & \textbf{Schemes}\\
+		\hline
+		$X$ a nice topological space & $S$ a nice scheme\\
+		$p : Y \to X$ a topological cover & $\phi : X \to S$ a \bemph{finite \'etale cover}\\ 
+		$x_0 \in X$ a point & $\overline{s_0} : \Spec(\Omega) \to S$ a \bemph{geometric point}\\
+		$\pi_1(X, x_0)$ defined in terms of loops/paths & Paths are meaningless in Zariski!\\
+		$\pi_1(X,x_0) = \Aut(\Fib_{x_0})$ & $\pi_1^{\et}(S, \overline{s_0})=\Aut(\Fib_{\ol{s_0}})$ \\
+		$\tilde{X} \to X$ universal cover (generally infinite degree) & $\mathfrak{X} \in \mathrm{pro}(\Fet_S)$ a \bemph{universal pro-object}\\
+		$\pi_1(X, x_0) \cong \Aut(\tilde{X})$ & $\pi_1^{\et}(S, s_0) \cong \varprojlim_{X \in \mathfrak{X}}\Aut(X)$
+	\end{tabular}
+\end{center}
 
 \leavevmode\\
 
-In fact for complex varieties $X_{/ \C}$ we will be able able to define both the classical fundamental group $\pi_1(X^\mathrm{an}, x_0)$ (considering its complex points $X(\C)$ canonically retopologised as a complex manifold $X^\mathrm{an}$) and the \'etale fundamental group $\pi_1^{\et}(X, \overline{x_0})$ (considering it as a scheme, where $\overline{x_0}$ is the geometric point induced by $x_0$), and in this case the two \emph{almost} coincide:
+In fact for complex affine varieties $X_{/ \C}$ we will be able able to define both the classical fundamental group $\pi_1(X^\mathrm{an}, x_0)$ (considering its complex points $X(\C)$ canonically retopologised as a complex manifold $X^\mathrm{an}$) and the \'etale fundamental group $\pi_1^{\et}(X, \overline{x_0})$ (considering it as a scheme, where $\overline{x_0}$ is the geometric point induced by $x_0$), and in this case the two \emph{almost} coincide:
 \[
 	\pi_1^{\et}(X, \overline{x_0}) \cong \widehat{\pi_1}(X^\mathrm{an}, x_0),
 \]
-where the only difference is a profinite completion on the right, appearing since we are only considering \emph{finite} covers as we will see later.
+where the only difference is a profinite completion on the right, appearing since we are only considering \emph{finite} covers as we will see later. \\
+
+The approach we will take is to use this recontextualisation of $\pi_1(X, x_0)$ as an automorphism group as the basis for our definition of $\pi_1^{\et}$. After defining all of the scheme theory we will need, we will try to reformulate the theory of covering spaces independent of loops so we can do it for schemes. There will be some interesting differences on 
 
 \subsection{An interesting coincidence}
 \label{subsec:1_2_Weil_rosetta_stone}
@@ -107,10 +98,11 @@ Given an algebraic closure $\ol{K}/K$, we can form the \bemph{maximal $S$-unrami
 where $L/K$ ranges over all finite, $S$-unramified extensions.
 
 \begin{thm}
-	The open subgroups of $G_{K,S}$ are in bijection with the set of finite, $S$-unramified extensions of $K$. An open subgroup $H$ is sent to its fixed field $K_S^H$, and a finite $S$-unramified extension $L/K$ is sent to the open subgroup $\Gal(K_S/L)$.
+	The open subgroups of $G_{K,S}$ are in bijection with the set of finite, $S$-unramified extensions of $K$ contained in $\ol{K}$. An open subgroup $H$ is sent to its fixed field $K_S^H$, and a finite $S$-unramified extension $L/K$ is sent to the open subgroup $\Gal(K_S/L)$.
 \end{thm}
 
-\pagebreak
+There is an underlying geometric object here, called $\Spec(\ints_{K,S})$ (see next week's talk). We will see that finite $S$-unramified extensions correspond to finite \'etale covers $X \epi \Spec(\ints_{K,S})$, and a choice of algebraic closure $\ol{K}$ corresponds to a choice of \emph{geometric basepoint} $\Spec(\ol{K})$.
+
 
 \subsubsection{A little bit of complex geometry}
 \label{subsubsec:1_2_2_riemann_surfaces}
@@ -118,10 +110,64 @@ where $L/K$ ranges over all finite, $S$-unramified extensions.
 	A \bemph{Riemann surface} is a smooth complex manifold of dimension 1.
 \end{defn}
 
-We are interested in holomorphic maps between Riemann surfaces, so fix a surjective holomorphic map $\phi : Y \to X$. Interestingly, any such map is a finite topological cover away from a finite set of points of $X$, which are called the \bemph{ramification points} of $\phi$. If a discrete subset $S \subset X$ contains all of the ramification points of $\phi$, we say that $\phi$ is \bemph{unramified away from $S$}. \\
-
-If we consider \\
-
-Since any finite cover of a Riemann surface is itself a Riemann surface, Theorem \ref{thm:galois_for_covers} specialises in this case to give a specific correspondence.
+We are interested in holomorphic maps between compact Riemann surfaces, so fix a surjective holomorphic map $\phi : Y \to X$. Interestingly, any such map is a finite topological cover away from a finite set of points of $X$, which are called the \bemph{ramification points} of $\phi$. If a discrete subset $S \subset X$ contains all of the ramification points of $\phi$, we say that $\phi$ is \bemph{unramified away from $S$}. \\
 
 
+Since any finite cover of Riemann surface is itself a Riemann surface, Theorem \ref{thm:galois_for_covers} specialises in this case to give a specific correspondence between pointed, $S$-unramified holomorphic covers of $(X,x_0)$ and finite-index subgroups of $\pi_1(X\setminus S, x_0)$, which is equivalent to the following statement about the profinite completion $\widehat{\pi_1}$ of the fundamental group.
+
+\begin{thm}
+	The open subgroups of $\widehat{\pi_1}(X\setminus S, x_0)$ are in bijection with finite, $S$-unramified, pointed holomorphic covers of $(X, x_0)$. An open subgroup $H$ is sent to the compactification of the orbit space $\widetilde{X-S}_{x_0}/H$ with basepoint $Hx_0$, and a finite, $S$-unramified, pointed holomorphic cover $\phi : (Y, y_0) \to (X, x_0)$ is sent to the open subgroup
+	\[
+		\phi_* \widehat{\pi_1}(Y\setminus \phi^{-1}[S], y_0) \subseteq \widehat{\pi_1}(X\setminus S, x_0).
+	\]
+\end{thm}
+
+There is an underlying algebraic object here, that being the field $K(X)$ of meromorphic functions on $X$, and the subring $\ints_{X,S}$ of meromorphic functions which are holomorphic away from $S$. Any holomorphic cover $\phi : Y \to X$  realises a field extension $\phi^* : K(X) \mono K(Y)$, and it sends $\ints_{X, S}$ to $\ints_{Y, \phi^{-1}[S]}$.
+
+
+\subsubsection{Weil's Rosetta stone}
+\label{subsubsec:1_2_3_rosetta_stone}
+We can formalise this correspondence later, but for now there's a long list of things that seem to be similar. We will write the objects of interest, as well as what the `\'etale equivalent' will be.
+\begin{center}
+	\begin{tabular}{c|c|c}
+		\textbf{Compact Riemann surface} $X$ & \textbf{Number field} $K$ & \emph{\'Etale equivalent} \\
+		\hline
+		$X$ & & $\Spec(\ints_K)$ \\
+		$X'$ &  & $\Spec(\ints_{K,S})$ \\
+		$\phi : Y \epi X$ holomorphic & $\iota : K \mono L$ finite extension & $\iota^* : \Spec(\ints_L) \epi \Spec(\ints_K)$ finite smooth \\
+		$S$ ramification points & $S$ ramified primes & $S$ ramification points \\
+		$\phi$ is $S$-unramified  & $L/K$ is $S$-unramified & $\iota^*$ is $S$-unramified\\
+		$\phi|_{Y'} \in \FinCov(X\setminus S)$ & & $\iota^*|_{\Spec(\ints_{L,S})} \in \Fet(\Spec(\ints_{K,S}))$ \\
+		$x_0 \in X'$ basepoint & $\ol{K}/K_S/K$ algebraic closure & $\overline{s_0}:\Spec(\ol{K}) \to \Spec(\ints_{K,S})$ geom. point \\
+		$\widehat{\pi_1}(X', x_0)$ & $G_{K,S}:=\Gal(K_S/K)$ & $\pi_1^{\et}(\Spec(\ints_{K,S}), \overline{s_0})$ \\
+		$\phi^{-1}(x)$ & Primes above $\prid \notin S$ & $\Spec(\ints_{L,S}) \times_{\Spec(\ints_{K,S})} \Spec(\Omega)$\\
+		Classification of hol. covers & Galois theory & Still to come...
+	\end{tabular}
+\end{center}
+
+Here we write $X' := X \setminus S$ and $Y' := Y \setminus \phi^{-1}[S]$ for brevity's sake.
+
+\subsubsection{A bonus "rad" fact}
+Though not entirely in the spirit of finite \'etale covers, the analogy between compact Riemann surfaces and number fields is even deeper than this. This subsection is only included for fun and is very informal, so feel free to skip it!\\
+
+One of the greatest achievements of early 20\textsuperscript{th} Century number theory was the development of \emph{class field theory}. The point of class field theory is to classify every so-called abelian number field, i.e. number fields with abelian Galois group over $\Q$. Along with the development of a theory of analysis over $\Q$ (i.e. analysis over the ring $\A_\Q$ of ad\`eles of $\Q$), it is known for some fairly mysterious isomorphisms. One of the most notable being:
+\[
+	G_{K, S}^{\ab} \cong K^\times \backslash \A_{K, \mathrm{fin}}^\times / U_S,\qquad U_S:= \prod_{v \notin S} U_v.
+\]
+The double quotient group here may be thought of as the Picard group of $\Spec(\ints_{K,S})$, i.e. we may think of this as a canonical isomorphism 
+\[
+	G_{K,S}^{\ab} \cong \mathrm{Pic}(\Spec\,\ints_{K,S}).
+\]
+Simultaenously on the other side, if we take the (punctured) compact Riemann surface $X' := X\setminus S$ we may consider its \emph{Jacobian variety}
+\[
+	\mathrm{Jac}(X') := H^0(X', \Omega_{X'}^1)^* / H_1(X')
+\]
+where a 1-chain $\gamma$ is seen as a functional on global holomorphic differentials via the usual pairing $(\gamma, \omega) \mapsto \int_\gamma \omega$. Then \emph{geometric class field theory} gives another mysterious canonical isomorphism 
+\[
+	\pi_1(X', x_0)^{\ab} \otimes \R/\Z \cong \mathrm{Jac}(X').
+\]
+Since $\mathrm{Jac}(X')$ may be seen as the identity component of the Picard variety, Weil's Rosetta stone suggests that these two statements are somewhat analogous. Writing $Z' := \Spec(\ints_{K,S})$ and $\overline{z_0} : \Spec(\ol{K}) \to Z'$, the statements even kind of looks the same:
+\[
+	\pi_1^{\et}(Z', \ol{z_0})^{\ab} \cong \mathrm{Pic}(Z') \,\,\Longleftrightarrow\,\, \pi_1(X', x_0)^{\ab} \otimes \R/\Z \cong \mathrm{Pic}^\circ (X').
+\]
+Perhaps the interesting most interesting thing here, however, is why these statements are different. Why the extra $\R/\Z$? Why $\pi_1$ instead of $\widehat{\pi_1}=\pi_1^{\et}$? Why $\mathrm{Jac}=\mathrm{Pic}^\circ$ instead of $\mathrm{Pic}$? The answers to these questions are simple... I don't know. But we may find out in one of the bonus lectures!
