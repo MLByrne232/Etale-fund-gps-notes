@@ -14,9 +14,9 @@ Let $X$ be a topological space. One historically important problem is that of cl
 
 These covering spaces of $X$ define a category $\Cov(X)$, whose morphisms are continuous maps $Y_1 \to Y_2$ commuting with the covers $p_i : Y_i \to X$. We will write $\FinCov(X)$ for the full subcategory of finite covers, and $\Cov_*(X, x_0)$ for the subcategory of pointed covers (with pointed morphisms). \\
 
-One notable property of covering spaces is the \emph{homotopy lifting property}: that given a homotopy $\{f_t :Z \to Y\}_{t \in [0,1]}$ of maps based in $X$, and a lift $g_0$ of $f_0$ through $p: Y \to X$, there exists a unique homotopy $\{\hat{f}_t : Z \to Y\}_{t \in [0,1]}$ lifting $\{f_t\}_t$ through $p: Y \to X$ such that $\hat{f}_0 = g_0$. \\
+One notable property of covering spaces is the \emph{homotopy lifting property}: that given a homotopy $\{f_t :Z \to X\}_{t \in [0,1]}$ of maps to $X$, and a lift $g_0:Z\to Y$ of $f_0$ through $p: Y \to X$, there exists a unique homotopy $\{\hat{f}_t : Z \to Y\}_{t \in [0,1]}$ lifting $\{f_t\}_t$ through $p: Y \to X$ such that $\hat{f}_0 = g_0$. \\
 
-As a consequence of the homotopy lifting property, their fibres admit a \emph{monodromy action}: given a cover $p: Y \to X$ and some $x_0 \in X$, the fibre $p^{-1}(x_0) \subseteq Y$ is a discrete subspace. Given a point $y \in p^{-1}(x)$ and some class $[\alpha] \in \pi_1 (X, x_0)$, which we recall is a strong homotopy equivalence class of loops in $X$ based at $x_0$, any representative $\alpha : [0,1] \to X$ lifts to a unique $\hat{\alpha}_y:[0,1] \to Y$ starting at $y$ whose strong homotopy class depends only on the strong homotopy class $[\alpha]$. Thus the endpoint $\hat{\alpha}_y(1)$ does not depend on the choice of lift, and we define $[\alpha] \cdot y := \hat{\alpha}_y(1)$. \\
+As a consequence of the homotopy lifting property, their fibres admit a \emph{monodromy action}: given a cover $p: Y \to X$ and some $x_0 \in X$, the fibre $p^{-1}(x_0) \subseteq Y$ is a discrete subspace. Given a point $y \in p^{-1}(x_0)$ and some class $[\alpha] \in \pi_1 (X, x_0)$, which we recall is a strong homotopy equivalence class of loops in $X$ based at $x_0$, any representative $\alpha : [0,1] \to X$ lifts to a unique $\hat{\alpha}_y:[0,1] \to Y$ starting at $y$ whose strong homotopy class depends only on the strong homotopy class $[\alpha]$. Thus the endpoint $\hat{\alpha}_y(1)$ does not depend on the choice of lift, and we define $[\alpha] \cdot y := \hat{\alpha}_y(1)$. \\
 
 So we can think of the taking the fibre at $x_0$ as a functor 
 \[
@@ -116,7 +116,7 @@ We are interested in holomorphic maps between compact Riemann surfaces, so fix a
 Since any finite cover of Riemann surface is itself a Riemann surface, Theorem \ref{thm:galois_for_covers} specialises in this case to give a specific correspondence between pointed, $S$-unramified holomorphic covers of $(X,x_0)$ and finite-index subgroups of $\pi_1(X\setminus S, x_0)$, which is equivalent to the following statement about the profinite completion $\widehat{\pi_1}$ of the fundamental group.
 
 \begin{thm}
-	The open subgroups of $\widehat{\pi_1}(X\setminus S, x_0)$ are in bijection with finite, $S$-unramified, pointed holomorphic covers of $(X, x_0)$. An open subgroup $H$ is sent to the compactification of the orbit space $\widetilde{X-S}_{x_0}/H$ with basepoint $Hx_0$, and a finite, $S$-unramified, pointed holomorphic cover $\phi : (Y, y_0) \to (X, x_0)$ is sent to the open subgroup
+	The open subgroups of $\widehat{\pi_1}(X\setminus S, x_0)$ are in bijection with finite, $S$-unramified, pointed holomorphic covers of $(X, x_0)$. An open subgroup $H$ is sent to the compactification of the orbit space $\widetilde{X \setminus S}_{x_0}/H$ with basepoint $Hx_0$, and a finite, $S$-unramified, pointed holomorphic cover $\phi : (Y, y_0) \to (X, x_0)$ is sent to the open subgroup
 	\[
 		\phi_* \widehat{\pi_1}(Y\setminus \phi^{-1}[S], y_0) \subseteq \widehat{\pi_1}(X\setminus S, x_0).
 	\]
