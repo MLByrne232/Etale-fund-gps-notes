@@ -1,8 +1,41 @@
 \section{A little bit about sheaves}
 \label{appendix:A_sheaves}
+The notion of a \emph{sheaf} is extremely important to scheme theory, and allows us to talk about local properties in an organised way. If you've never seen anything about them, I'll try to introduce them as best as I can.
 
-BLAH BLAH BLAH SHEAF THEORY
+\begin{eg}
+	The main motivating example for a sheaf is the notion of sections of a continuous map $f:X \to Y$, that is, continuous maps $s:Y \to X$ such that $f \circ s = \id_X$. While not every continuous map admits such a continuous section, it is more likely that admit a \emph{local} section, i.e. there is an open $U \subseteq X$ and some continuous $s : U \to Y$ such that $f \circ s = \id_U$. For each open set $U \subseteq X$, we will write $\ints_f (U)$ for the set of local sections of $f$ at $U$. Then we notice some important properties:
+	\begin{itemize}
+		\item \textbf{Restriction:} if $U \supseteq V$ and $s \in \ints_f(U)$ is a local section at $U$, then the restriction $s|_V$ is a local section at $V$, i.e. $s|_V \in \ints_f(V)$;
+		\item \textbf{Locality:} if $U = \bigcup_i U_i$ and two sections $s,t \in \ints_f(U)$ agree on each $U_i$ (i.e. $s|_{U_i} = t|_{U_i}$ for each $i$), then they must agree on all of $U$, $s=t$. That is to say, sections are fully determined by their restrictions;
+		\item \textbf{Gluing:} if $U = \bigcup_i U_i$ and for each $i$ we have a section $s_i \in \ints_f(U_i)$ which agree on overlaps (i.e. such that $s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j}$ whenever $U_i \cap U_j \neq \varnothing$). That is to say, we may glue together compatible sections.
+	\end{itemize}
+	This local-global structure is exactly the kind of thing that sheaves are meant to capture.
+\end{eg}
 
-% stalk(F) = colim_U F(U)
+\begin{defn}
+	Let $X$ be a topological space. A \bemph{presheaf of sets} (respectively, of abelian groups, of rings, etc.) on $X$ is an assignment of a set (resp. abelian group, ring, etc.) $\mathcal{F}(U)$ to each open set $U \subseteq X$, along with a function (resp. homomorphism, morphism, etc.) $\rho^U_V : \mathcal{F}(U) \to \mathcal{F}(V)$ whenever $U \supseteq V$ which `behave like restriction maps', i.e. $\rho^U_U = \id_U$ and $\rho^V_W \circ \rho^U_V = \rho^U_W$ for each tower $U \supseteq V \supseteq W$. An element $s \in \mathcal{F}(U)$ is called a \bemph{section} of $\mathcal{F}$ at $U$, and for $U=X$ a section $s \in \mathcal{F}(X)$ is called a \bemph{global section}. A presheaf $(\mathcal{F}, \rho)$ is said to be a \bemph{sheaf} if:
+	\begin{itemize}
+		\item[(L)] for each open cover $U = \bigcup_i U_i$, two sections $s,t \in \mathcal{F}(U)$ are equal if and only if $\rho^U_{U_i}(s) = \rho^U_{U_i}(t)$ for each $i$; and
+		\item[(G)] for each open cover $U = \bigcup_i U_i$ and family of sections $\{s_i \in \mathcal{F}(U_i)\}_i$ such that
+			\[
+				\rho^{U_i}_{U_i \cap U_j}(s_i) = \rho^{U_j}_{U_i \cap U_j}(s_j), \qquad U_i \cap U_j \neq \varnothing,
+			\]
+			there is a section $s \in \mathcal{F}(U)$ such that $s_i = \rho^U_{U_i}(s)$.
+	\end{itemize}
+\end{defn}
 
-% ringed spaces, locally ringed spaces, etc.
+As before, property (L) just says that sections are fully determined by their restrictions, and property (G) just says that we can glue sections together. 
+
+\begin{eg}
+	\begin{enumerate}[(i)]
+		\item As before, $\ints_f$ defines a sheaf of sets on $X$;
+		\item The assignment $\mathcal{F} = \mathrm{Map}(-, \R)$ on open sets of $X$, where $\mathrm{Map}(U, \R)$ denotes the $\R$-algebra of continuous maps $U \to \R$, is a presheaf of $\R$-algebras with $\rho^U_V(f) := f|_V$. Definition of equality of functions tells us that $\mathcal{F}$ satisfies property (L), and the gluing lemma ensures that it satisfies property (G). Thus, $\mathcal{F}$ defines a sheaf on $X$;
+		\item \textbf{Non-example:} The assignment $\mathrm{Map}_{\mathrm{bdd}}(-, \R)$ of bounded continuous functions still defines a presheaf with usual restrictions, and this presheaf satisfies property (L). However, we do not necessarily have property (G), since for example the function $\id_\R : \R \to \R$ is unbounded and continuous, but with respect to the open cover $\R = \bigcup_{n \in \Z} (n-1, n+1)$, its local sections are all bounded. These restrictions thus do not glue to a bounded function;
+		\item \textbf{Non-example:} We may define a presheaf $\underline{\Z}$ of commutative rings on any topological space $X$ by assigning $\underline{\Z}(U) := \Z$ and $\rho^U_V = \id_{\Z}$. Any section of $\underline{\Z}$ is just an integer, so if we take two disjoint opens $U, V$, then the sections $1 \in \underline{\Z}(U), 2 \in \underline{\Z}(V)$ do not glue to a section on $U\cup V$. This is called the \bemph{constant presheaf} associated to $\Z$;
+		\item We may instead define the presheaf $(\underline{\Z})^+$ the assign to each $U$ the set of locally constant functions $U \to \Z$. Then we find that we do, indeed, have properties (L) and (G), so this does define a sheaf of commutative rings on $X$. This is called the \bemph{constant sheaf} associated to $\Z$.
+	\end{enumerate}
+\end{eg}
+
+% morphisms of sheaves
+% stalks of sheaves % stalk(F) = colim_U F(U)
+% (locally) ringed spaces & their morphisms
