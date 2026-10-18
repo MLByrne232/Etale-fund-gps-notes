@@ -1,3 +1,4 @@
+\addcontentsline{toc}{section}{Appendices}
 \section{A little bit about sheaves}
 \label{appendix:A_sheaves}
 The notion of a \emph{sheaf} is extremely important to scheme theory, and allows us to talk about local properties in an organised way. If you've never seen anything about them, I'll try to introduce them as best as I can.
@@ -22,20 +23,203 @@ The notion of a \emph{sheaf} is extremely important to scheme theory, and allows
 			\]
 			there is a section $s \in \mathcal{F}(U)$ such that $s_i = \rho^U_{U_i}(s)$.
 	\end{itemize}
+	A presheaf $\mathcal{F}$ satisfying property (L) is called \bemph{separated}.
 \end{defn}
 
-As before, property (L) just says that sections are fully determined by their restrictions, and property (G) just says that we can glue sections together. 
+As before, property (L) just says that sections are fully determined by their restrictions, and property (G) just says that we can glue sections together. If $\mathcal{F}$ is a presheaf whose local sections are functions, we see that (L) is automatically separated, since functions are fully determined by their values.
 
 \begin{eg}
+	\label{eg:sheaf_(non)examples}
 	\begin{enumerate}[(i)]
 		\item As before, $\ints_f$ defines a sheaf of sets on $X$;
-		\item The assignment $\mathcal{F} = \mathrm{Map}(-, \R)$ on open sets of $X$, where $\mathrm{Map}(U, \R)$ denotes the $\R$-algebra of continuous maps $U \to \R$, is a presheaf of $\R$-algebras with $\rho^U_V(f) := f|_V$. Definition of equality of functions tells us that $\mathcal{F}$ satisfies property (L), and the gluing lemma ensures that it satisfies property (G). Thus, $\mathcal{F}$ defines a sheaf on $X$;
-		\item \textbf{Non-example:} The assignment $\mathrm{Map}_{\mathrm{bdd}}(-, \R)$ of bounded continuous functions still defines a presheaf with usual restrictions, and this presheaf satisfies property (L). However, we do not necessarily have property (G), since for example the function $\id_\R : \R \to \R$ is unbounded and continuous, but with respect to the open cover $\R = \bigcup_{n \in \Z} (n-1, n+1)$, its local sections are all bounded. These restrictions thus do not glue to a bounded function;
-		\item \textbf{Non-example:} We may define a presheaf $\underline{\Z}$ of commutative rings on any topological space $X$ by assigning $\underline{\Z}(U) := \Z$ and $\rho^U_V = \id_{\Z}$. Any section of $\underline{\Z}$ is just an integer, so if we take two disjoint opens $U, V$, then the sections $1 \in \underline{\Z}(U), 2 \in \underline{\Z}(V)$ do not glue to a section on $U\cup V$. This is called the \bemph{constant presheaf} associated to $\Z$;
+		\item The assignment $\mathcal{F} = \mathrm{Map}(-, \R)$ on open sets of $X$, where $\mathrm{Map}(U, \R)$ denotes the $\R$-algebra of continuous maps $U \to \R$, is a presheaf of $\R$-algebras with $\rho^U_V(f) := f|_V$. Definition of equality of functions tells us that $\mathcal{F}$ is separated, and the gluing lemma ensures that it satisfies property (G). Thus, $\mathcal{F}$ defines a sheaf on $X$;
+		\item \textbf{Non-example:} The assignment $\mathrm{Map}_{\mathrm{bdd}}(-, \R)$ of bounded continuous functions still defines a separated presheaf with usual restrictions. However, we do not necessarily have property (G), since for example the function $\id_\R : \R \to \R$ is unbounded and continuous, but with respect to the open cover $\R = \bigcup_{n \in \Z} (n-1, n+1)$, its local sections are all bounded. These restrictions thus do not glue to a bounded function;
+		\item \textbf{Non-example:} We may define a separated presheaf $\underline{\Z}$ of commutative rings on any topological space $X$ by assigning $\underline{\Z}(U) := \Z$ and $\rho^U_V = \id_{\Z}$. Any section of $\underline{\Z}$ is just an integer, so if we take two disjoint opens $U, V$, then the sections $1 \in \underline{\Z}(U), 2 \in \underline{\Z}(V)$ do not glue to a section on $U\cup V$. This is called the \bemph{constant presheaf} associated to $\Z$;
 		\item We may instead define the presheaf $(\underline{\Z})^+$ the assign to each $U$ the set of locally constant functions $U \to \Z$. Then we find that we do, indeed, have properties (L) and (G), so this does define a sheaf of commutative rings on $X$. This is called the \bemph{constant sheaf} associated to $\Z$.
 	\end{enumerate}
 \end{eg}
 
-% morphisms of sheaves
-% stalks of sheaves % stalk(F) = colim_U F(U)
-% (locally) ringed spaces & their morphisms
+For those that are more categorically minded, a presheaf of sets (resp. of abelian groups, etc.) on $X$ is exactly a functor $\mathcal{F}:\mathrm{Open}(X)^\text{op} \to \Set$ (resp. $\mathcal{F}:\mathrm{Open}(X)^\text{op} \to \mathbf{Ab}$, etc.), where $\mathrm{Open}(X)$ is the preorder category of open sets of $X$ under inclusion. Consequently, a sheaf of, say, commutative rings on $X$ is a functor $\mathcal{F} : \mathrm{Open}(X)^\text{op} \to \mathbf{CRing}$ such that for every open cover $U = \bigcup_{i \in I} U_i$ the sequence
+\[
+	\begin{tikzcd}[column sep=large, row sep=tiny]
+		0 \rar & \mathcal{F}(U) \rar & {\displaystyle \prod_{i \in I} \mathcal{F}(U_i)} \rar & {\displaystyle \prod_{i,j \in I} \mathcal{F}(U_{i,j})}\\
+		& s \rar[mapsto] &(s_i := s|_{U_i})_{i \in I} \rar[mapsto] & (s_i|_{U_{i,j}} - s_j|_{U_{i,j}})_{i,j}
+	\end{tikzcd}
+\]
+is exact, where the $\mathcal{F}(U) \to \mathcal{F}(V);\, s \mapsto s|_V$ maps are those induced by $V \mono U$, and $U_{i,j} := U_i \cap U_j$ for each $i,j \in I$. \\
+
+As is common in analysis and topology, sometimes we want to study the behaviour of functions in an `infinitesimal neighbourhood' of a point. In analysis and topology, this is achieved with limits. Similar we can use the categorical notion of a (co)limit to do this with sheaves.
+
+\begin{defn}
+	Let $\mathcal{F}$ be a sheaf on $X$. Then the \bemph{stalk} of $\mathcal{F}$ at $x \in X$, denoted $\mathcal{F}_x$, is the colimit $\mathcal{F}_x := \mathrm{colim}_{U \ni x} \mathcal{F}(U)$ with respect to the restriction morphisms. An element $g \in \mathcal{F}_x$ is called a \bemph{germ} of $\mathcal{F}$ at $x$.
+\end{defn}
+
+\begin{eg}
+	Let $\mathcal{F} = \mathrm{Map}(-, \R)$ be the sheaf of continuous maps to $\R$ on a topological space $X$ (per Example \ref{eg:sheaf_(non)examples}(i)). We may explicitly construct the stalk $\mathcal{F}_x$ at $x \in X$ as follows: we consider the set $F_x$ of pairs $(s, U)$ consisting of a section $s \in \mathcal{F}(U)$ on an open neighbourhood $U \ni x$. Then each $(s, U) \in F_x$ is definitionally contained in some $\mathcal{F}(U)$, so it should have some image in $\mathcal{F}_x$. Thus we get a map $F_x \to \mathcal{F}_x$ which must be surjective since $\mathcal{F}_x$ is a colimit. We will denote this map by $(s, U) \mapsto [s, U]$. We see that two germs $[s, U], [t, V] \in \mathcal{F}_x$ are equal if and only if the image of $(s,U)$ and of $(t, V)$ are equal in some $\mathcal{F}(W)$, again by the definition of colimits. That is, $[s, U] = [t, V]$ if and only if there is $W \subseteq U \cap V$ such that $s|_W = t|_W$. This recovers the classical notion of the \emph{germ of a map}, hence the name \emph{germ} for an element of a stalk.
+\end{eg}
+
+\begin{eg}
+	Let $X$ be the closed subvariety of $\A^n$, say over $\C$. Then the \emph{structure sheaf} $\ints_X$ on $X$ associates to a Zariski open $U$ all of the \emph{regular functions} $U \to \A^1$, that is, functions which are locally given by rational functions (one may think of this as the \href{https://en.wikipedia.org/wiki/Sheaf_(mathematics)#Turning_a_presheaf_into_a_sheaf}{sheafification} of the presheaf of rational functions). It is not immediately obivous that $\ints_X(X)$ is equal to the coordinate ring $\ints(X)$ of $X$, though this is true. On the basic open set $D(f) = {p \in X \mid f(p) \neq 0}$ for $f \in \ints(X)$, we see that $\ints_X(D(f)) = \ints(X)_f$ is the localisation of $\ints(X)$ at $f$, i.e. the ring resulting from adjoining an inverse of $f$, and restriction maps are simply the canonical inclusions as subrings of $\Frac\,\ints(X)$. Consequently, we may think of colimits of these as unions, and thus the stalk at $p\in X$ may be computed as
+	\[
+		\ints_{X, p} = \colim\limits_{U \ni p} \, \ints_X(U) = \bigcup_{U \ni p} \ints_X(U) = \bigcup_{f \notin \mxid_p} \ints(X)_f = \ints(X)_{\mxid_p},
+	\]
+	where $\mxid_p$ is the maximal ideal of $\ints(X)$ corresponding to $p$ (see Section \ref{subsec:2_1_classical_AG}), and $\ints(X)_{\mxid_p}$ is the localisation at the maximal ideal $\mxid_p$ (achieved by inverting all elements not in $\mxid_p$). For instance when $X = \A^1$, then the stalk of $\ints_X$ at $a \in \A^1 = \C$ is $\C[x]_{(x-a)}$, where we invert $(x-b)$ for every $b \neq a$.
+\end{eg}
+
+We also have a notion of a map between sheaves, called a \emph{morphism}.
+
+\begin{defn}
+	Let $\mathcal{F}, \mathcal{G}$ be two sheaves of sets (resp. abelian groups, commutative rings, etc.) on $X$. A \bemph{morphism} $\varphi : \mathcal{F} \to \mathcal{G}$ consists of a function (resp. homomorphism, etc.) $\varphi_U : \mathcal{F}(U) \to \mathcal{G}(U)$ commuting with restriction, i.e. such that for all opens $U \supseteq V$ the following diagram commutes:
+	\[
+		\begin{tikzcd}
+			\mathcal{F}(U) \rar["\varphi_U"] \dar["\rho^U_V"] & \mathcal{G}(U) \dar["\rho^U_V"] \\
+			\mathcal{F}(V) \rar["\varphi_V"] & \mathcal{G}(V)
+		\end{tikzcd}
+	\]
+\end{defn}
+
+When thinking of sheaves as functors from $\mathrm{Open}(X)^\text{op}$, the notion of a morphism of sheaves coincides with the notion of a natural transformation between sheaves. The category of sheaves on $X$ will be denoted $\Sh(X)$.
+
+\subsection{The \'etal\'e space and sheafification}
+\label{subsec:A_1_etale_space}
+Recall that our motivating example of a sheaf was the sheaf of sections of a continuous map $f: X \to Y$. This is a particularly important motivating example, since it turns out that every sheaf can be thought of in this way via a construction known as the \emph{\'etal\'e space} of the sheaf. This space is usually a very strange topological space though, so these are not so easy to think about precisely.\\
+
+If $\mathcal{F}$ is a sheaf on a space $X$, we have a canonical surjection
+\[
+	\pi : \coprod_{x \in X} \mathcal{F}_x \epi X
+\]
+where the stalk $\mathcal{F}_x$ is sent to $x \in X$. The idea of the \'etal\'e space construction is to endow $E(\mathcal{F}) := \coprod_x \mathcal{F}_x$ with a topology such that $\mathcal{F}$ naturally identifies with the sheaf of sections of $\pi$. Let $U \subseteq X$, then every $s \in \mathcal{F}(U)$ defines elements $s_x \in \mathcal{F}_x$ for each $x \in U$. We then define the subset $V(s, U) \subseteq E(\mathcal{F})$ to be the set containing all such germs of $s$, i.e. 
+\[
+	V_{\mathcal{F}}(s, U) := \{ s_x \in \mathcal{F}_x \mid x \in U \}.
+\]
+Then such the collection of such sets covers $E(\mathcal{F})$ (i.e. $\bigcup_{s,U} V_{\mathcal{F}}(s,U) = E(\mathcal{F})$), and only $V_{\mathcal{F}}(s,U)$ and $V_{\mathcal{F}}(t, U')$ only intersect when $U$ and $U'$ intersect and $s|_{U \cap U'} = t|_{U \cap U'}$; In such a case, we have
+\[
+	V_\mathcal{F}(s,U) \cap V_{\mathcal{F}}(t, U') = V_{\mathcal{F}}(s|_{U \cap U'}, U \cap U').
+\]
+Consequently, such sets form a basis of a topology on $E(\mathcal{F})$.
+
+\begin{defn}
+	The \bemph{\'etal\'e topology} on $E(\mathcal{F})$ is the topology $\mathcal{T}_{\et}$ generated by the sets $V_{\mathcal{F}}(s, U)$, where $U$ ranges over all opens of $X$ and $s$ ranges over all of $\mathcal{F}(U)$. When $E(\mathcal{F})$ is equipped with its \'etal\'e topology, we call it the \bemph{\'etal\'e space} of $\mathcal{F}$.
+\end{defn}
+
+\begin{prop}
+	The sheaf $\ints_{\pi_\mathcal{F}}$ of continuous sections of $\pi_{\mathcal{F}} : E(\mathcal{F}) \epi X$ canonically identifies with the sheaf $\mathcal{F}$.
+\end{prop}
+\begin{proof}
+	Let $U \subseteq X$ be an open. Then a local section of $\pi$ at $U$ is exactly a function $s : U \to E(\mathcal{F})$ such that $\pi \circ s = \id_U$, that is, such that $s(u) \in \mathcal{F}_u$ for each $u \in U$. Such a section is continuous if and only if $s^{-1}[V_{\mathcal{F}}(t, U)] \subseteq X$ is open for each $U \subseteq X$ and $t \in \mathcal{F}(U)$. We see that 
+	\[
+		s^{-1}[V_{\mathcal{F}}(t,U)] = \{ x \in X \mid s(x) \in V_{\mathcal{F}}(t, U)\} = \{x \in X \mid s(x) = t_x\}.
+	\]
+	Any $t \in \mathcal{F}(U)$ naturally determines a unique $s_t \in \ints_{\pi_\mathcal{F}}(U)$ by $s_t(x) := t_x$ (and if $\mathcal{F}$ is a sheaf of abelian groups, etc., this must be a homomorphism since taking germs is definitionally a homomorphism), so we get a canonical injective function (resp. homomorphism) $\mathcal{F}(U) \mono \ints_{\pi_\mathcal{F}}(U)$.\\ 
+	
+	Now to prove surjectivity of this map. If $U' \subseteq U$, $s \in \ints_{\pi_{\mathcal{F}}}(U)$, and $t \in \mathcal{F}(U')$, then $U'' := s^{-1}[V_\mathcal{F}(t, U')]$ is the largest open subset of $U'$ on which $s(x) = t_x$. Taking an open cover $U = \bigcup_i U_i$, each $U_i$ is contained in a preimage under $s$, and thus we get local sections $t_i \in \mathcal{F}(U_i)$ whose stalks agree with the values $s(x)$ on all of $U_i$. Since $\mathcal{F}$ is a sheaf, these glue together to a section $t \in \mathcal{F}(U)$. By construction, $s(x) = t_x$ for all $x \in U$. Thus, every $s \in \ints_{\pi_\mathcal{F}}(U)$ is in the image of $\mathcal{F}(U)$, so this map is a canonical isomorphism.
+\end{proof}
+
+\begin{cor}
+	\label{cor:sheafification_is_idempotent}
+	Every sheaf $\mathcal{F}$ on $X$ is the sheaf of sections of its \'etal\'e space $E(\mathcal{F}) \epi X$.
+\end{cor}
+
+\begin{cor}
+	\label{cor:sheafification_existence}
+	For every presheaf $\mathcal{P}$ on $X$, there exists a canonical sheaf $\mathcal{P}^+$ on $X$ with a canonical morphism $\mathcal{P} \to \mathcal{P}^+$ such that $\mathcal{P}_x = \mathcal{P}^+_x$ for all $x \in X$. Moreover, if $\mathcal{F}$ is a sheaf then $\mathcal{F}^+ = \mathcal{F}$.
+\end{cor}
+\begin{proof}
+	The construction of the \'etal\'e space and its corresponding sheaf of sections only requires $\mathcal{P}$ to be a presheaf. The map $\mathcal{P} \to \mathcal{P}^+$ is given by sending a section $t \in \mathcal{P}(U)$ to the section $t(x) := t_x$. Taking the sheaf of sections of $E(\mathcal{P}) \epi X$ defines such a sheaf. The latter statement follows from Corollary \ref{cor:sheafification_is_idempotent}.
+\end{proof}
+
+\begin{defn}
+	If $\mathcal{P}$ is a presheaf on $X$, then the sheaf $\mathcal{P}^+$ of Corollary \ref{cor:sheafification_existence} is called the \bemph{sheafification} of $\mathcal{P}$.
+\end{defn}
+
+\paragraph{Warning.} Though the actual set $E(\mathcal{F})$ only depends on the stalks of $\mathcal{F}$, the \'etal\'e topology on $E(\mathcal{F})$ does depend on the sectional structure of $\mathcal{F}$, so a sheaf $\mathcal{F}$ is not necessarily fully determined by its stalks.
+
+The sheafification $\mathcal{P}^+$ is the best possible approximation of $\mathcal{P}$ in the sense of the following universal property: if $\mathcal{G}$ is a sheaf on $X$ and $\varphi:\mathcal{P} \to \mathcal{G}$ is a morphism of presheaves, then there exists a unique morphism of sheaves $\wh{\varphi}:\mathcal{P}^+ \to \mathcal{G}$ making the diagram 
+\[
+	\begin{tikzcd}[column sep=large]
+		\mathcal{P} \dar \ar[rd, "\varphi"] &  \\
+		\mathcal{P}^+ \rar[dashed, "\exists!\wh\varphi"'] & \mathcal{G}
+	\end{tikzcd}
+\]
+commute.
+
+
+\subsection{New sheaves from old}
+\label{subsec:A_2_image_functors}
+In classical algebraic geometry, pullbacks and pushforwards allow us to pass maps from one variety to another. More generally, we should be able to do this for sections of a sheaf. In this section, we will take a continuous map $f:X \to Y$ and produce from it two functors
+\[
+	f_*: \Sh(X) \to \Sh(Y),\qquad f^* : \Sh(Y) \to \Sh(X),
+\]
+called the \emph{pushforward} and \emph{pullback} functors.
+
+\begin{defn}
+	Let $f: X \to Y$ be a continuous map and $\mathcal{F}$ be a sheaf on $X$. We define the \bemph{pushforward} $f_*\mathcal{F}$ of $\mathcal{F}$ along $f$ to be the presheaf on $Y$ given by $f_*\mathcal{F}(U) := \mathcal{F}(f^{-1}[U])$.
+\end{defn}
+
+\begin{prop}
+	If $f:X \to Y$ is continuous and $\mathcal{F}$ is a sheaf on $X$, then the pushforward $f_*\mathcal{F}$ presheaf defines a sheaf on $Y$. Moreover, such an assignment $f_* : \Sh(X) \to \Sh(Y)$ is functorial.
+\end{prop}
+\begin{proof}
+	It suffices to note that the preimage of an open cover $U = \bigcup_{i \in I} U_i$ in $Y$ under a continuous map $f: X \to Y$ gives an open cover $f^{-1}[U] = \bigcup_{i \in I} f^{-1}[U_i]$ in $X$. Thus, locality and gluing of $\mathcal{F}$ immediately imply that $f_*\mathcal{F}$ satisfies properties (L) and (G), thus defines a sheaf on $Y$. If $\varphi : \mathcal{F} \to \mathcal{G}$ is a morphism of sheaves on $X$, then we may define a morphism $f_*\varphi : f_*\mathcal{F} \to f_*\mathcal{G}$ by $(f_*\varphi)_U := \varphi_{f^{-1}[U]}$ for each open $U \subseteq Y$.
+\end{proof}
+
+\begin{eg}
+	A closed affine algebraic variety $X$ is isomorphic, as a topological space, to the maximal spectrum of its coordinate ring via the map $F(p) := \ker(\ev_p)$. The sheaf of regular functions $\ints_X$ on $X$ thus defines a sheaf $F_*\ints_X$ on $Y := \Spec_\mxid (\ints(X))$ via the pushforward functor $F_*$. Since the basic open set $\mathfrak{D}(f) := \{\prid \in Y \mid f \notin \prid\} \subseteq Y$ for some $f \in \ints(X)$ corresponds to the basic open $D(f) := \{p \in X \mid f(p) \neq 0\}$ under $F$, we may compute that the pushforward $F_*\ints_X$ takes values 
+	\[
+		(F_*\ints_X)(\mathfrak{D}(f)) := \ints_X(D(f)) := \ints(X)_f.
+	\]
+	So the pushforward $F_*\ints_X$ agrees with the structure sheaf $\ints_{Y}$ on $Y$.
+\end{eg}
+
+We then run into a small issue... if we have a sheaf $\mathcal{G}$ on $Y$, how do we get a sheaf on $X$? Well, what we \emph{want} to do is to define sections at $U$ to be $\mathcal{G}(f[U])$, but $f[U]$ may not necessarily be open! So we may then guess that we want to approximate $f[U]$ by opens of $Y$ and define sections as $\colim_{V \supseteq f[U]} \mathcal{G}(V)$. While this does indeed define a presheaf on $X$, it is not necessarily a sheaf. But we can fix this use \'etal\'e spaces!\\
+
+Let $f^*_\text{psh}\mathcal{G}$ be the presheaf defined by 
+\[
+	\left(f^*_\text{psh}\mathcal{G}\right)(U) := \colim\limits_{V \supseteq f[U]}\, \mathcal{G}(V).
+\]
+
+\begin{defn}
+	If $f:X \to Y$ is continuous and $\mathcal{G}$ is a sheaf on $Y$, then the \bemph{pullback} $f^*\mathcal{G}$ of $\mathcal{G}$ along $f$ is defined as the sheafification $f^*\mathcal{G} := \left(f^*_\text{psh}\mathcal{G}\right)^+$ of the presheaf $f^*_\text{psh}\mathcal{G}$.
+\end{defn}
+
+
+Though the construction of the pullback sheaf is much more involved than that of the pushforward, it still has some nice properties, such as:
+
+\begin{prop}
+	Let $f: X \to Y$ be continuous and $\mathcal{G}$ a sheaf on $Y$. Then the stalk of the pullback $f^*\mathcal{G}$ at $x \in X$ is given by 
+	\[
+		\left(f^*\mathcal{G}\right)_x = \mathcal{G}_{f(x)}.
+	\]
+\end{prop}
+\begin{proof}
+	Since the sheafification of a presheaf preserves stalks (by construction), we need only check that the stalks of $f^*_\text{psh}\mathcal{G}$ are of this form. At $x \in X$, we see that 
+	\[
+		\left(f^*\mathcal{G}\right)_x = \left(f^*_\text{psh}\mathcal{G}\right)_x := \colim\limits_{U \ni x}\,\colim\limits_{V \supseteq f[U]}\, \mathcal{G}(V) = \colim\limits_{V \ni f(x)}\, \mathcal{G}(V) =: \mathcal{G}_{f(x)}. \qedhere
+	\]
+\end{proof}
+
+
+% pullback sheaf and étalé space
+
+
+\subsection{Ringed spaces}
+We will be especially interested in rings of commutative rings. When a space has a sheaf of (commutative) rings, we call it a \emph{ringed space}, and when its stalks are local we say that $X$ is \bemph{locally ringed}.
+\label{subsec:A_3_ringed_spaces} % (locally) ringed spaces & their morphisms
+\begin{defn}
+	A \bemph{ringed space} is a pair $(X, \ints_X)$, where $X$ is a topological space, and a sheaf $\ints_X$ of commutative rings on $X$, called its \bemph{structure sheaf}. If all of the stalks $\ints_{X,x}$ of $\ints_X$ are local rings (i.e. have a unique maximal ideal), then we say that $(X, \ints_X)$ is a \bemph{locally ringed space}. 
+\end{defn}
+
+We sometimes omit $\ints_X$ from the notation and just say that $X$ is a (locally) ringed space.
+
+\begin{eg}
+	\begin{enumerate}[(i)]
+		\item Let $X$ be a space and define its structure sheaf $\ints_X$ to be the sheaf of continuous functions to $\R$. Then since $\R$ is a commutative topological ring, each $\ints_X(U)$ inherits a commutative ring structure. The stalk $\ints_{X,x}$ at $x \in X$ has its ring structure explicitly given by
+			\[
+				[s, U] + [t, V] = [s|_{U\cap V}+t|_{U\cap V}, U \cap V], \qquad [s, U]\cdot [t,V] = [(s|_{U\cap V})\cdot(t|_{U\cap V}), U \cap V],
+			\]
+			and a germ $[s,U]$ is invertible if and only if and only if $s(x) \neq 0$, by continuity. Let $\mxid_x$ denote the set of germs $[s,U]$ at $x$ for which $s(x)=0$, which is seen to be an ideal of $\ints_{X,x}$. Clearly this is maximal, since anything not in $\mxid_x$ is a unit. Moreover, if $J$ is a proper ideal of $\ints_{X,x}$ then it contains no units, so is contained in $\mxid_x$. Consequently, $\mxid_x$ is the unique maximal ideal of $\ints_{X,x}$, and so $\ints_{X,x}$ is local. So $(X, \ints_X)$ is a locally ringed space;
+		\item If $M$ is a smooth manifold, then the sheaf $\ints_M$ of smooth functions to $\R$ is also seen make $M$ a locally ringed space, for exactly the same reasons as above;
+		\item If $V$ is an algebraic variety (or scheme), then the sheaf $\ints_V$ of regular functions (resp. morphisms) to $\A^1$ makes $V$ a locally ringed space for the same reasons.
+	\end{enumerate}
+\end{eg}
+
