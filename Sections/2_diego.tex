@@ -207,7 +207,7 @@ between the categories of commutative rings and the (opposite) category of affin
 While we have defined the notion of an affine scheme, there is a more general notion of a scheme which is a strictly larger category. Very roughly, affine schemes are to schemes what $\C^n$ is the a complex manifold: a scheme should be a space that locally looks like an affine scheme, or one that results from gluing together affine schemes.
 
 \begin{defn}
-	A locally ringed space $(X, \ints)$ is called a \bemph{scheme} if there is an open cover $\{U_i\}_{i \in I}$ of $X$ such that each $U_i$, as a locally ringed space, is isomorphic to an affine scheme $\Spec(R_i)$.
+	A locally ringed space $(X, \ints)$ is called a \bemph{scheme} if there is an open cover $\{U_i\}_{i \in I}$ of $X$ such that each $U_i$, as a locally ringed space, is isomorphic to an affine scheme $\Spec(R_i)$. A \bemph{morphism of schemes} is then a map of locally ringed spaces between schemes.
 \end{defn}
 
 \begin{rmk}
@@ -259,7 +259,8 @@ While we have defined the notion of an affine scheme, there is a more general no
 One very important notion is that of a scheme being \emph{above} another scheme.
 
 \begin{defn}
-	If $S$ is a scheme, then an \bemph{$S$-scheme} is a scheme $X$ equipped with a morphism $X \to S$. If $R$ is a ring, then we may call a $\Spec(R)$-scheme simply an \bemph{$R$-scheme}.
+	\label{defn:S-scheme}
+	If $S$ is a scheme, then an \bemph{$S$-scheme} is a scheme $X$ equipped with a morphism $\pi : X \to S$. If $R$ is a ring, then we may call a $\Spec(R)$-scheme simply an \bemph{$R$-scheme}. A \bemph{morphism} $f:(X_1, \pi_1) \to (X_2, \pi_2)$ of $S$-schemes is a morphism of schemes that commutes with the maps $\pi_i: X_i \to S$, i.e. such that $\pi_2 \circ f = \pi_1$.
 \end{defn}
 
 \begin{eg}
@@ -272,7 +273,7 @@ One very important notion is that of a scheme being \emph{above} another scheme.
 	\end{enumerate}
 \end{eg}
 
-\subsection{Operations with schemes}
+\subsection{Fibre products and base change}
 \label{subsec:2_3_operations_with_schemes}
 Along with the notion of schemes and morphisms, we have a few notable operations we can do on schemes. The first and foremost is the notion of \bemph{fibre products}.
 
@@ -284,19 +285,244 @@ Along with the notion of schemes and morphisms, we have a few notable operations
 			X \rar["\varphi"] & Z
 		\end{tikzcd}
 	\]
-	In particular, if $X = \Spec(A), Y = \Spec(B),$ and $Z=\Spec(R)$ are affine schemes (making $A$ and $B$ commutative $R$-algebras), then their fibre product is $X \times_Z Y = \Spec(A \otimes_R B)$. An important special case of the fibre product is the \bemph{base change} $X_A := X \times_{\Spec(R)} \Spec(A)$, where $X$ is an $R$-scheme and $A$ is a commutative $R$-algebra.
+	An important special case of the fibre product is the \bemph{base change} $X_A := X \times_{\Spec(R)} \Spec(A)$, where $X$ is an $R$-scheme and $A$ is a commutative $R$-algebra.
 \end{defn}
 
 
 \begin{eg}
 	\begin{enumerate}[(i)]
-		\item If $X:=\A^n_{R}$ is affine $n$-space over a commutative ring $R$ and $A$ is a commutative $R$-algebra, then the base change $X_A$ is exactly affine $n$-space over $A$, since 
-			\[
-				X_A = \Spec(R[\underline{x}]) \times_{\Spec(R)} \Spec(A) = \Spec(R[\underline{x}]\otimes_R A) = \Spec(A[\underline{x}]) = \A^n_{A},
-			\]
-			where we write $R[\underline{x}] := R[x_1, \ldots, x_n]$ for short (and similarly for $A[\underline{x}]$);
+		\item If $X:=\A^n_{R}$ is affine $n$-space over a commutative ring $R$ and $A$ is a commutative $R$-algebra, then the base change $X_A$ is exactly affine $n$-space over $A$;
 		\item Similarly, if $X := \PP^n_{R}$ is projective $n$-space over a commutative ring $R$ and $A$ is a commutative $R$-algebra, then the base change $X_A$ is exactly projective $n$-space over $A$.
 	\end{enumerate}
 \end{eg}
 
+\begin{prop}
+	\label{prop:fibre_product_affine_schemes}
+	If $X = \Spec(A), Y = \Spec(B), Z=\Spec(R)$ are affine schemes with morphism $\varphi : X \to Z$ and $\psi : Y \to Z$ (making $A$ and $B$ commutative $R$-algebras), then their fibre product is $X \times_Z Y = \Spec(A \otimes_R B)$.
+\end{prop}
+\begin{proof}
+	By the equivalence of categories $\CRing^\text{op} \simeq \mathbf{AffSch}$, the pullback in $\mathbf{AffSch}$ corresponds to a pushout in $\CRing$, which are given exactly by tensor products.
+\end{proof}
+
+\begin{eg}
+	Consider affine $n$- and $m$-space $\A^n, \A^m$ over $\C$. Let $C = \Spec(\C)$, which we may view as a point onto which both $\A^n$ and $\A^m$ project. The fibre product $\A^n \times_C \A^m$ may then be compute using Proposition \ref{prop:fibre_product_affine_schemes}: 
+	\[
+		\A^1 \times_C \A^1 = \Spec(\C[x_1, \ldots, x_n] \otimes_\C \C[y_1, \ldots, y_m]) = \Spec(\C[x_1, \ldots, x_n, y_1, \ldots, y_m]) = \A^{n+m}. \qedhere
+	\]
+\end{eg}
+
+\subsection{Some special families of morphisms}
+\label{subsec:2_4_families_of_morphisms}
+Recall that we defined a morphism from a scheme $X$ to another scheme $Y$ to be a morphism $f:(X, \ints_X) \to (Y, \ints_Y)$ of the underlying locally ringed spaces. What does this actually mean for these functions? Well, continuity with respect to the Zariski topology should mean that the preimage of a subscheme is a subscheme, so a continuous function $f:X \to Y$ should be one that respects the "subscheme" heirarchy. The existence of the corresponding sheaf morphism $f^{\#} : \ints_Y \to f_*\ints_X$ just tells us that this also respects the underlying \emph{algebraic} structure.\\ 
+
+In the affine case, the equivalence of categories $\CRing^{\text{op}} \simeq \mathbf{AffSch}$ tells us that it is enough to respect the algebraic structure (i.e. the global component $f^{\#}_Y : \ints(Y) \to \ints(X)$ of $f^{\#}$ fully determines the map $f$). More generally, morphisms of schemes restrict to morphisms of affine charts, so we can think of a morphism of a general scheme (in a very imprecise way) to be a bunch of ring homormophisms glued together.\\
+
+As such, the usual families of ring homomorphisms (finite type, flat, etc.) may be extended to families of \emph{scheme} morphisms. In this section, we'll define all of the families of morphisms we need. 
+
+\subsubsection{Finiteness criteria}
+\label{subsubsec:2_4_1_finiteness}
+First on the chopping block are the so-called finite-type morphisms. Recall that a homomorphism $f : A \to B$ of commutative rings is said to be of finite type if it realises $B$ as an $A$-algebra of finite-type (i.e. it is isomorphic to a quotient of some $A[x_1, \ldots, x_n]$).
+
+\begin{defn}
+	A morphism $f : \Spec(S) \to \Spec(R)$ of affine schemes is said to be of \bemph{finite type} if the associated ring homomorphism $f^{\#} : R \to S$ is finite-type. We say that a morphism $f : X \to Y$ of abstract schemes is \bemph{locally of finite type} if for every $x \in X$, there is an affine chart $U \ni x$ of $X$ and an affine chart $V \supseteq f[U]$ of $Y$ such that the restriction $f|_{U,V} : U \to V$ is of finite type.
+\end{defn}
+
+\begin{eg}
+	\label{eg:finite_type_morphism}
+	\begin{enumerate}[(i)]
+		\item Let $n \leq m$ and consider affine $n$- and $m$-space $\A^n, \A^m$ over $\C$. The map 
+		\[
+			f:\A^m \epi \A^n; (x_0, \ldots, x_m) \mapsto (x_0, \ldots, x_n)
+		\] 
+		induced by inclusion $f^{\#} : \ints(\A^n) \mono \ints(\A^m)$ is of finite type, since the associated homomorphism $f^{\#}$ trivially realises $\C[x_1, \ldots, x_m]$ as a $\C[x_1, \ldots, x_n]$-module;
+		\item Now consider the affine scheme $\A^1\setminus\{0\} = \Spec(\C[x,x^{-1}])$ over $\C$. The map $w : \A^1\setminus\{0\} \epi \A^1 \setminus \{0\}; \, z \mapsto z^n$ with $w^{\#} : \C[x,x^{-1}] \mono \C[y, y^{-1}];\, x \mapsto y^n$, clearly realising $\C[y,y^{-1}]$ as a quotient of $\C[x,x^{-1}][u,v]$, namely
+		\[
+			\C[y,y^{-1}] \cong \frac{\C[x,x^{-1}][u,v]}{(u^n-x, v^n-x^{-1}, uv-1)},
+		\]
+		clearly by $y \mapsto u, y^{-1} \mapsto v = u^{-1}$;
+		\item If $L/K$ is a finite extension of number fields, then inclusion $K \mono L$ induces the finite type morphism $\Spec(L) \epi \Spec(K)$, and similarly we get finite type morphisms $\Spec(\ints_L) \epi \Spec(\ints_K)$, and similarly for $S$-integers.
+	\end{enumerate}
+\end{eg}
+
+There is a slightly stronger notion than finite-type called \emph{finite-presentation}. A homomorphism $f:A \to B$ of rings is of \bemph{finite presentation} if it makes $B$ a finitely \emph{finitely presented} $A$-algebra, i.e. it is a quotient of some $A[x_1, \ldots, x_n]$ by some finitely generated ideal $(f_1, \ldots, f_m)$. 
+
+\begin{defn}
+	A morphism $f : \Spec(S) \to \Spec(R)$ of affine schemes is said to be of \bemph{finite presentation} if the associated ring homomorphism $f^{\#} : R \to S$ is finite-presentation. We say that a morphism $f : X \to Y$ of abstract schemes is \bemph{locally of finite presentation} if for every $x \in X$, there is an affine chart $U \ni x$ of $X$ and an affine chart $V \supseteq f[U]$ of $Y$ such that the restriction $f|_{U,V} : U \to V$ is of finite presentation.
+\end{defn}
+
+Note that if $A$ is Noetherian then so too is $A[x_1, \ldots, x_n]$, so a morphism $f:A \to B$ is of finite presentation if and only if it is of finite type. Consequently, any (locally) finite-type morphism $X \to \Spec(A)$ is also (locally) of finite presentation.
+
+\pagebreak
+
+\begin{eg}
+	\begin{enumerate}[(i)]
+		\item All of the examples from Example \ref{eg:finite_type_morphism} are of finite presentation, since all fields and Dedekind domains are Noetherian;
+		\item \textbf{Non-example}: if $k$ is a field, then the polynomial ring $A := k[x_1, x_2, \ldots]$ in countably many variables is not Noetherian. The evaluation map $A \to k[x]$ sending $x_1 \mapsto x$ and $x_n  \mapsto 0$ for $n>1$ realises $k[x]$ as a finite-type $A$-algebra (in fact, with zero generators!), but the kernel $(x_2, x_3, x_4, \ldots)$ is not finitely generated over $A$. Thus the map $\A^1_k \to \Spec(A)$ induced by this is of finite type but not finite presentation.
+	\end{enumerate}
+\end{eg}
+
+Most of the rings we work over will be Noetherian, so the distinction between morphisms of locally finite-type and of locally finite-presentation will be one that we will not pay much attention to.
+
+\subsubsection{Relative differentials}
+\label{subsubsec:relative_differentials}
+To define the other properties we need, we will first have to talk about \emph{relative differentials} of ring homomorphisms. The idea comes from differential geometry: the differential forms on a manifold tell us a lot about that manifold's geometry. However, in algebraic geometry we have no analytic structure with which to define differential forms, but we can define derivations. The relative differentials then form some universal derivation, and thus encapsulate the idea of a differential of a function.
+
+\begin{defn}
+	Let $R$ be a commutative ring and $S$ a commutative $R$-algebra. Then an \bemph{$R$-derivation} on $S$ is an $R$-linear map $d : S \to M$ to an $S$-module $M$ satisfying the \bemph{Leibniz rule}:
+	\[
+		d(fg) = f\cdot dg + g\cdot d\!f.
+	\]
+\end{defn}
+
+\begin{prop}
+	Let $\varphi:R \to S$ be a homomorphism of commutative rings, making $S$ an $R$-algebra. Let $\wt{\Omega}$ denote the free $S$-module generated by the symbols $\{ds \mid s \in S\}$, and $N \leq \wt\Omega$ the submodule given by 
+	\[
+		N := \gen{d(\varphi r),\,\, d(s+t) - ds -dt,\,\, d(st) - s dt - t ds \mid r \in R, s,t \in S}.
+	\]
+	Then the quotient module $\Omega^1_{S\mid R} := \wt\Omega / N$ admits a canonical $R$-derivation $d : S \to \Omega^1_{S\mid R}$ sending each $s \in S$ to $ds \in \Omega^1_{S\mid R}$. Such an $R$-derivation $d: S \to \Omega^1_{S \mid R}$ is \emph{universal}, in that every other $R$-derivation $\delta : S \to M$ factors in the the form $\delta = \psi \circ d$, for $\psi : \Omega^1_{S \mid R} \to M$ a homomorphism of $S$-modules. Morover, if $\{s_1, \ldots, s_m\}$ generate $S$ as an $R$-algebra, then $\Omega^1_{S \mid R}$ is generated by $\{ds_1, \ldots, ds_m\}$ as an $S$-module.
+\end{prop}
+\begin{proof}
+	\Exc. Prove this! (it's not too hard, most of the work is in the construction itself).
+\end{proof}
+
+\begin{defn}
+	The module $\Omega^1_{S \mid R}$, equipped with its universal $R$-derivation $d : S \to \Omega^1_{S \mid R}$, is called the module of \bemph{relative differentials}, or \bemph{K\"ahler differentials}, of $S$ over $R$.
+\end{defn}
+
+\begin{eg}
+	\label{eg:kahler_differentials_rings}
+	\begin{enumerate}[(i)]
+		\item Let $A = \C[x_1, \ldots, x_n]$, considered a $\C$-algebra. Then since $x_1, \ldots, x_n$ generate $A$ as a $\C$-algebra we can conclude, from $\C$-linearity of $\C$-derivations as well as the Leibniz rule, that $\Omega^1_{A \, \mid \, \C}$ is generated by the differentials $dx_1, \ldots, dx_n$. Thus, every K\"ahler differential $\omega \in \Omega^1_{A\, \mid\, \C}$ is of the form 
+		\[
+			\omega = f_1 dx_1 + \cdots + f_n dx_n, \qquad f_i \in A. 
+		\]
+		\item Suppose that $L/K$ is a finite separable extension of fields. Then by the primitive element theorem, $L = K(\alpha)$ for some $\alpha \in L$. Thus, $\Omega^1_{L \mid K}$ is generated by $d \alpha$. Let $m = X^n + \sum_{i=0}^{n-1}a_i x^i \in K[x]$ denote the minimal polynomial of $\alpha$ over $K$, which is notably a separable irreducible polynomial so shares no roots with its formal derivative $f'$. Then 
+		\[
+			m(\alpha) = \alpha^n + a_{n-1}\alpha^{n-1} + \cdots + a_1 \alpha + a_0 = 0.
+		\]
+		Applying the derivation $d$ to both sides gives 
+		\[
+			0 = (n\alpha^{n-1} + (n-1)a_{n-1}\alpha^{n-2} + \cdots + 2 a_2\alpha + a_1)d\alpha = f'(\alpha)d\alpha.
+		\]
+		But $f'(\alpha) \neq 0$ since $f$ is separable irreducible, and thus we conclude that $d\alpha = 0$, hence $\Omega^1_{L \mid K}=0$. \qedhere
+	\end{enumerate}
+\end{eg}
+
+\begin{prop}
+	\label{prop:differential_of_poly_is_derivative}
+	Let $S$ be a commutative $R$-algebra (for $R$ a commutative ring) and consider the universal derivation $d : S \to \Omega^1_{S \mid R}$. If $p \in R[t]$ is a polynomial over $R$ and $\alpha \in S$, then $d(p(\alpha)) = p'(\alpha)d\alpha$.
+\end{prop}
+\begin{proof}
+	We may check that the usual power law $d(\alpha^n) = n\alpha^{n-1} d\alpha$ works by repeatedly using the Leibniz rule. WLOG we may write $p = \sum_{i=0}^n a_it^i$, then we compute that 
+	\begin{align*}
+		d(p(\alpha)) &= d\left(a_n \alpha^n + a_{n-1}\alpha^{n-1} + \cdots a_1 \alpha + a_0\right)\\ 
+		&= a_n d(\alpha^{n}) + a_{n-1} d(\alpha^{n-1}) + \cdots + a_1 d\alpha + d(a_0)\\ 
+		&= n a_n \alpha^{n-1} d\alpha + (n-1)a_{n-1}\alpha^{n-2} d\alpha + \cdots + 2a_2\alpha d\alpha + a_1d\alpha\\ 
+		&= p'(\alpha)d\alpha. \qedhere
+	\end{align*}
+\end{proof}
+
+We can then extend this notion for schemes using our notion of $\ints_X$-modules (see \S\ref{subsubsec:A_4_1_O-modules}).
+
+\begin{defn}
+	If $f : Y \to X$ is a morphism of affine schemes, then the \bemph{sheaf of relative differentials} $\Omega^1_{Y \mid X}$ is the $\ints_X$-module on $X$ whose sections are given by $\Omega^1_{Y \mid X}(U) := \Omega^1_{f_*\ints_Y(U) \mid \ints_X(U)}$, with respect to the map $f^\#_U : \ints_X(U)\to f_*\ints_Y(U)$. For a morphism of general schemes $f: Y \to X$, we may define the sheaf $\Omega^1_{Y \mid X}$ by declaring it to be given by the above on the affine charts of $X, Y$.
+\end{defn}
+
+\begin{eg}
+	\label{eg:kahler_differentials_schemes}
+	\begin{enumerate}[(i)]
+		\item Consider the $\C$-algebra homomorphim $\pi_n : \C[x,x^{-1}] \mono \C[t,t^{-1}]$ given by $x \mapsto t^n$. This corresponds to the morphism $\Pi_n$ of affine schemes given by 
+			\[
+				\Pi_n : \Gm' \epi \Gm; \quad z \mapsto z^n,
+			\]
+		where $\Gm = \Gm':= \Spec(\C[x,x^{-1}]) = \A^1_\C \setminus \{0\}$  are two copies of what is often called the \bemph{multiplicative group scheme} (we will see what this means later). We will then compute the sections $\Omega^1_{\Gm' \mid \Gm}$ on the basic open set $D_f \subseteq \Gm$ for some $f \in \C[x,x^{-1}]$. By definition $\Omega^1_{\Gm' \mid \Gm}(D_f)$ is the module of relative differentials of 
+		\[
+			B:=\Pi_{n, *}\ints_Y(D_f) = \C[t,t^{-1}]_{\pi_n (f)} \quad \text{over} \quad A:=\ints_X(D_f) = \C[x,x^{-1}]_f.
+		\]
+		The monomorphism $\pi_n$ identifies $A = \C[t^n, t^{-n}]_{\pi_n(f)} \subseteq B$, and thus we may view $B = A[x^{1 / n}, x^{-1 / n}]$. Writing $s_1 = x^{1/n}$ and $s_2 = x^{-1/n}$, we thus see that $\Omega^1_{\Gm'\mid\Gm}(D_f)$ is generated as a $B$-module by $\{ds_1, ds_2\}$. Applying the Leibniz rule to the equation $s_1 s_2 = 1$, we recover that 
+		\[
+			0 = s_1 ds_2 + s_2 ds_1,
+		\]
+		and consequently $ds_2 = -s_2^2 ds_1$ via $s_1^{-1} = s_2$. So $\Omega^1_{\Gm' \mid \Gm}(D_f)$ is generated only by $ds_1$. But the relation $s_1^n = x \in A$ tells us that $ns_1^{n-1} ds_1 = 0$, and since $ns_1^{n-1} \neq 0$ is invertible in $B$, we must have $ds_1 = 0$, hence $\Omega^1_{\Gm' \mid \Gm}(D_f)=0$. It follows from this that $\Omega^1_{\Gm' \mid \Gm}$ is zero on every open of $\Gm$, in such a case we write $\Omega^1_{\Gm' \mid \Gm}=0$;
+		\item Recall the affine scheme $X:=\A^2_{\C} \setminus \{0\}$ with affine charts $U_1 := \Spec(\C[x, y, x^{-1}])$ and $U_2 := \Spec(\C[x, y, y^{-1}])$. The inclusion of $\C$ into the coordinate ring gives us a canonical projection onto $C := \Spec(\C)$. Relative differentials $\Omega^1_{X \mid C}(U_1)$ are generated by $\{dx, dy\}$ over $\C[x,y,x^{-1}]$ (we see $d(x^{-1}) = -x^{-2} dx$), and relative differentials $\Omega^1_{X \mid C}(U_2)$ are again generated by $\{dx, dy\}$, though this time over $\C[x,y,y^{-1}]$. One then computes that $\Omega^1_{X \mid C}(X) = \Omega^1_{X \mid C}(U_1 \cup U_2)$ is generated by $\{dx, dy\}$ over $\C[x,y]$. Heuristically, we may see $\Omega^1_{X \mid C}(X)$ as the set of differentials on $\Omega^1_{X \mid C}(U_1)$ which are defined on $U_2$, or vice versa;
+		\item Suppose that $L/K$ is a finite Galois extension of number fields, that it is unramified away from a finite set of prime ideals $S$ of $\ints_K$, and let $Y := \Spec(\ints_L)$ and $X := \Spec(\ints_K)$. Consider then the inclusion map $\pi^{\#} :\ints_K \mono \ints_L$, which induces an epimorphism $\pi : Y \epi X$ of affine schemes. We then wish to compute $\Omega^1_{Y \mid X}$ on, say, the basic open $D_f \subseteq X$. Computing these relative differentials then comes down to computing the relative differentials of the map $\pi^{\#} : \ints_{K, f} \mono \ints_{L, f}$. Since $L$ is a finite dimension $K$-vector space, it follows that $\ints_L$ is a finitely generated $\ints_K$-module, and so suppose we have some generators $\ints_L = \ints_K[\alpha_1, \ldots, \alpha_n]$, and consequently $\ints_{L, f} = \ints_{K, f}[\alpha_1, \ldots, \alpha_n]$. We know then that $\Omega^1_{Y \mid X}(D_f) = \Omega^1_{\ints_{L, f} \mid \ints_{K, f}}$ must be generated by $\{d\alpha_1, \ldots, d\alpha_n\}$ as an $\ints_{L, f}$-module. Since each $\alpha_i$ is algebraic over $K$, and in particular lies in the integral closure of $\ints_K$, we may consider the minimal polynomial $m_i \in \ints_K[t]$ of each $\alpha_i$. The relation $m_i(\alpha_i)=0$ gives the relation $m_i'(\alpha_i) d\alpha_i = 0$ by Proposition \ref{prop:differential_of_poly_is_derivative}. Such $m_i'(\alpha_i)$ is invertible in $\ints_L$ exactly when $\ints_K[\alpha_i]$ is an everywhere-unramified extension\footnote{This is because $m_i'(\alpha_i)$ generates the different $\mathfrak{D} := \mathfrak{D}_{K(\alpha_i)/K} \ideal \ints_{K}[\alpha_i]$ (cf. \cite[Prop. I.4.6(i)]{casselsFrohlich67}) which is divisible by a prime $\Prid$ of $\ints_K[\alpha_i]$ if and only if $\Prid$ ramifies. Therefore, $K(\alpha_i)/K$ is unramified if and only if $\mathfrak{D} :=(m_i'(\alpha_i))$ is not divisible by any prime ideals of $\ints_K[\alpha_i]$, i.e. if and only if $\mathfrak{D} = (1)$, i.e. if and only if $m_i'(\alpha_i)$ is invertible.} of $\ints_K$, so $d\alpha_i =0$ exactly when $\alpha_i$ generates an unramified extension. If $\{\alpha_1, \ldots, \alpha_s\}$ are the subset of generators which generate ramified extensions, then $\Omega^1_{Y \mid X} (D_f)$ is generated by $\{d\alpha_1, \ldots, d\alpha_s\}$. In particular, $L/K$ is everywhere-unramified if and only if $\Omega^1_{Y \mid X} = 0$;
+		\item With exactly the same notation as (iii), we let $X' := \Spec(\ints_{K, S})$ and $Y' = \Spec(\ints_{L, S})$. Then since each $m'_i(\alpha_i)$ is invertible in $\ints_{K,S}$, we see that $\Omega^1_{Y' \mid X'} = 0$.
+		% unramified extensions of ROIs of # flds
+	\end{enumerate}
+\end{eg}
+
+
+\subsubsection{Finite \'etale morphisms, and their relations to smooth and unramified morphisms}
+\label{subsubsec:sm_nr_et}
+Recall the notion of the \bemph{residue field} $k(\prid)$ of a scheme $S$ at a point $\prid \in S$, which is defined the be the residue of the local ring $\ints_{S, \prid}$. 
+
+
+\begin{defn}
+	Let $f: X \to S$ be a morphism of schemes which is locally of finite type. We say that $f$ is \bemph{finite \'etale} the fibre $X_\prid := X \times_{S} \Spec(k(p))$ of $f$ at a point $\prid \in S$ is the spectrum of a finite \'etale $k(\prid)$-algebra (i.e. a finite sum of finite separable extensions of $k(p)$). In particular, a morphism $f : \Spec(B) \to \Spec(A)$ of affine schemes which is locally of finite type is finite \'etale if and only if $B \otimes_{A} k(\prid)$ is a finite \'etale $k(\prid)$-algebra for every $\prid \in S$.
+\end{defn}
+
+
+\begin{eg}
+	\label{eg:finite_etale_morphisms}
+	\begin{enumerate}[(i)]
+		\item Consider the morphism $\Gm' \epi \Gm;\, z \mapsto z^n$ from Example \ref{eg:kahler_differentials_schemes}(i). The residue field at $\prid \in \Gm$ is exactly the residue field of the local ring $\C[x,x^{-1}]_{\prid}$, i.e. it is given by $k(\prid) = \Frac(\C[x,x^{-1}]/\prid)$. The points of $\Gm = \Gm'$ are either closed or generic, since $\Gm$ is dimension 1 (this is just the Krull dimension for affine schemes), so at the generic point $\prid = (0) \in \Gm'$ we see that the fibre is the spectrum of $\C[x^{1/n}, x^{1/n}] \otimes_{\C[x,x^{-1}]} \C(x) = \C(x^{1/n})$, which is a separable extension of $\C(x)$. Closed points $\mxid \in \Gm$ are just maximal ideals of $\C[x,x^{-1}]$, which are all of the form $\mxid_a := (x-a, x^{-1} - a^{-1}) = (x-a)$ for some $a \in \C^\times$, and we see that 
+			\[
+				k(\mxid_a) = \frac{\C[x, x^{-1}]}{\mxid_a} = \frac{\C[x,x^{-1}]}{(x-a)} \cong \C.
+			\]
+		A closed point $\nxid_b := (t-b)$ of $\C[t,t^{-1}] \cong \C[x^{1/n}, x^{-1/n}]$ maps to $\mxid_a$ under this morphism if and only if $b^n = a$, so there are $n$ distinct points mapping to $\mxid_a$. So, we obtain that the fibre at $\mxid_a$ is the spectrum of 
+		\[
+			\C[t, t^{-1}] \otimes_{\C[x,x^{-1}]} \C \cong \frac{\C[t, t^{-1}]}{(t-\sqrt[n]{a})} \oplus \frac{\C[t, t^{-1}]}{(t-\zeta_n\sqrt[n]{a})} \oplus \cdots \oplus \frac{\C[t, t^{-1}]}{(t-\zeta_n^{n-1}\sqrt[n]{a})} \cong \C^{\oplus n},
+		\]
+		where $\zeta_n = e^{2\pi i/n}$. Since $\C/\C$ is trivially a finite separable extension, $\C^{\oplus n}$ is a finite \'etale $\C$-algebra and thus the morphism $\Gm' \epi \Gm;\, z \mapsto z^n$ is finite \'etale. We will see later that this is the equivalent of the $n$-fold cover of the circle $S^1 \epi S^1$ from the classical theory of covering spaces;
+		\item If $L/K$ is a finite Galois extension of number fields, unramified away from a finite set $S$ of primes of $\ints_K$, then we consider $X' := \Spec(\ints_{K,S}), Y' := \Spec(\ints_{L, S}),$ and the induced morphism $\pi : Y' \epi X'$ from inclusion $\pi^{\#} : \ints_{K, S} \mono \ints_{L, S}$. The fibre at the generic point of $X'$ is $\Spec(L)$, and the residue field of this generic point is $K$. Since $L/K$ is Galois, it is separable and thus $L$ is a finite \'etale $K$-algebra. A closed point $\prid \in X'$ is just a maximal ideal of $\ints_K$ which is unramified in $L/K$, so if $\prid\ints_L = \Prid_1 \ldots \Prid_n$ is the decomposisition of $\prid$ into distinct primes $\Prid_i$, then Sunzi's theorem tells us that the fibre of $\pi$ is given by the spectrum of
+		\[
+			\frac{\ints_{L,S}}{\prid\ints_L} = \frac{\ints_L}{\Prid_1 \cdots \Prid_n} \cong \frac{\ints_L}{\Prid_1} \oplus \cdots \oplus \frac{\ints_L}{\Prid_n},
+		\] 
+		and each $\ints_L/\Prid_i = k(\Prid_i)$ is a finite extension of $\ints_K/\prid = k(\prid)$, thus separable since $k(\prid)$ is perfect (every finite field is perfect). So this morphism $\pi : Y' \epi X'$ is finite \'etale. In fact, we see from this proof that $\Spec(\ints_{L, S}) \epi \Spec(\ints_{K, S})$ is finite \'etale if and only if $S$ contains all of the primes of $\ints_K$ ramified in $L/K$.
+	\end{enumerate}
+\end{eg}
+
+While this definition is nice and computable, we lose the benefit of geometric intuition. We will define some more geometric properties which will turn out to give an equivalent definition.
+
+\begin{defn}
+	Let $f: X \to S$ be a morphism of schemes which is locally of finite presentation. Then we say that $f$ is \bemph{unramified} if $\Omega^1_{X \mid S}=0$ with respect to $f$. We say that $f$ is \bemph{smooth at $x \in X$} there exists affine charts $U = \Spec(B) \ni x$ and $V = \Spec(A) \ni f(x)$, with $B = A[t_1, \ldots, t_n]/(p_1, \ldots, p_m)$, such that the $B$-ideal generated by the $m\times m$ minors of the matrix $(\partial p_i / \partial t_j)_{ij}$ is $B$. We say that $f$ is \bemph{smooth} if it is smooth at each $x \in X$.
+\end{defn}
+
+These are equivalent to the previous definitions when $f:X \to S$ is a morphism of $k$-schemes, but we omit the proof of this because it really isn't all too important for us.
+
+\begin{thm}
+	\label{thm:fet_iff_sm_and_unr}
+	Let $f:X \to S$ be a morphism of schemes which is locally of finite presentation. Then $f$ is finite \'etale if and only if $f$ is both smooth and unramified.
+\end{thm}
+\begin{proof}
+	Omitted; see \cite[Corollaire 17.6.2]{EGAIV}.
+\end{proof}
+
+
+
+\subsubsection{Intuition for these definitions}
 % talk about Diego's ramification intuition in the morphisms-y bit
+These definitions are all a bit abstract, so to give some intuition we'll see what this means for a morphism $f : Y \to X$ of affine complex varieties (such a map is automatically locally finitely presented). In this case, the closed points each of these can be embedded into some $\C^n$ and $\C^m$ respectively, and thus can be endowed with the Euclidean topology to be made into complex manifolds. The corresponding complex manifolds will be denoted by $X^\text{an}$ and $Y^\text{an}$.\\
+
+Since morphisms of varieties are polynomial maps, the map $f : Y \to X$ induces a map $f:Y^\text{an} \to X^\text{an}$ of manifolds. Let $q \in Y^\text{an}$ be a point and $p = f(q)$, both considered closed subvarieties of $Y$ and $X$ respectively which we may identify with $\Spec(\C)$. We will look at what both the `unramified' and `smooth' condition mean for this map $f: Y^\text{an} \to X^\text{an}$. 
+
+\paragraph{Unramified:} Since dualising vector spaces $V \mapsto V^\vee$ is an involution, we get a series of identifications 
+\[
+	\Omega^1_{X \mid p} = \Omega^1_{\ints(X) \mid \C} = \Hom_{\C}(\Omega^1_{\ints(X) \mid \C}, \C)^\vee = \mathrm{Der}_\C(\ints(X), \C)^\vee = T_p^* X^\text{an}
+\] 
+where $T_p^*X^\text{an}$ denotes the cotangent space of $X^\text{an}$ at $p$, and similarly $\Omega^1_{Y\mid q} = T_q^* Y^\text{an}$. Then the canonical exact sequence induced by the map\footnote{\Exc. Look back at Example \ref{eg:kahler_differentials_rings}(i) to see if you can figure out what the map is yourself :)} $\Omega^1_{X \mid p} \to \Omega^1_{Y \mid p}$ is of the form:
+\[
+	\underbrace{\Omega^1_{X \mid p}}_{T_p^*X^\text{an}} \longrightarrow \underbrace{\Omega^1_{Y \mid q}}_{T_q^*Y^\text{an}} \longrightarrow \Omega^1_{Y \mid X} \longrightarrow 0,
+\]
+for which the first arrow may be identified with the adjoint $(d_q f)^\vee$ of the derivative $d_q f : T_q Y^\text{an} \to T_p X^\text{an}$ of $f$ at $q$. So we see that $f$ is unramified, i.e. $\Omega^1_{Y \mid X} = 0$, if and only if $(d_qf)^\vee$ is surjective. That is to say, $f$ is unramified if and only if the derivative $d_q f$ is \emph{injective}. The point here is that when unramified morphisms don't fold away dimensions.
+
+\paragraph{Smooth:} This one does not just translate to `$f$ is a smooth map', but rather that $f$ is a smooth \emph{submersion} (by the submersion theorem). That is, $f$ is algebraically smooth exactly when the derivative $d_q f : T_q Y^\text{an} \to T_p X^\text{an}$ is \emph{surjective}.\\
+
+
+Together, these give us a nice characterisation of finite \'etale morphisms of affine varieties over $\C$:
+\begin{thm}
+	\label{thm:fet_maps_complex_varieties}
+	A morphism $f: Y \to X$ of affine complex varieties is finite \'etale if and only if the corresponding map $f:Y^\text{an} \to X^\text{an}$ of complex manifolds is a local diffeomorphism.
+\end{thm}
+
+This should give us some nice intuition: we should think of a general finite \'etale morphism as the algebraic equivalent of a local diffeomorphism!

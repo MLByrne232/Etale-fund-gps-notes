@@ -34,8 +34,8 @@ As before, property (L) just says that sections are fully determined by their re
 		\item As before, $\ints_f$ defines a sheaf of sets on $X$;
 		\item The assignment $\mathcal{F} = \mathrm{Map}(-, \R)$ on open sets of $X$, where $\mathrm{Map}(U, \R)$ denotes the $\R$-algebra of continuous maps $U \to \R$, is a presheaf of $\R$-algebras with $\rho^U_V(f) := f|_V$. Definition of equality of functions tells us that $\mathcal{F}$ is separated, and the gluing lemma ensures that it satisfies property (G). Thus, $\mathcal{F}$ defines a sheaf on $X$;
 		\item \textbf{Non-example:} The assignment $\mathrm{Map}_{\mathrm{bdd}}(-, \R)$ of bounded continuous functions still defines a separated presheaf with usual restrictions. However, we do not necessarily have property (G), since for example the function $\id_\R : \R \to \R$ is unbounded and continuous, but with respect to the open cover $\R = \bigcup_{n \in \Z} (n-1, n+1)$, its local sections are all bounded. These restrictions thus do not glue to a bounded function;
-		\item \textbf{Non-example:} We may define a separated presheaf $\underline{\Z}$ of commutative rings on any topological space $X$ by assigning $\underline{\Z}(U) := \Z$ and $\rho^U_V = \id_{\Z}$. Any section of $\underline{\Z}$ is just an integer, so if we take two disjoint opens $U, V$, then the sections $1 \in \underline{\Z}(U), 2 \in \underline{\Z}(V)$ do not glue to a section on $U\cup V$. This is called the \bemph{constant presheaf} associated to $\Z$;
-		\item We may instead define the presheaf $(\underline{\Z})^+$ the assign to each $U$ the set of locally constant functions $U \to \Z$. Then we find that we do, indeed, have properties (L) and (G), so this does define a sheaf of commutative rings on $X$. This is called the \bemph{constant sheaf} associated to $\Z$.
+		\item \textbf{Non-example:} We may define a separated presheaf $\underline{\Z}^\text{psh}$ of commutative rings on any topological space $X$ by assigning $\underline{\Z}^\text{psh}(U) := \Z$ and $\rho^U_V = \id_{\Z}$. Any section of $\underline{\Z}^\text{psh}$ is just an integer, so if we take two disjoint opens $U, V$, then the sections $1 \in \underline{\Z}^\text{psh}(U), 2 \in \underline{\Z}^\text{psh}(V)$ do not glue to a section on $U\cup V$. This is called the \bemph{constant presheaf} associated to $\Z$;
+		\item We may instead define the presheaf $\underline{\Z}$ the assign to each $U$ the set of locally constant functions $U \to \Z$. Then we find that we do, indeed, have properties (L) and (G), so this does define a sheaf of commutative rings on $X$. This is called the \bemph{constant sheaf} associated to $\Z$.
 	\end{enumerate}
 \end{eg}
 
@@ -173,38 +173,78 @@ called the \emph{pushforward} and \emph{pullback} functors.
 
 We then run into a small issue... if we have a sheaf $\mathcal{G}$ on $Y$, how do we get a sheaf on $X$? Well, what we \emph{want} to do is to define sections at $U$ to be $\mathcal{G}(f[U])$, but $f[U]$ may not necessarily be open! So we may then guess that we want to approximate $f[U]$ by opens of $Y$ and define sections as $\colim_{V \supseteq f[U]} \mathcal{G}(V)$. While this does indeed define a presheaf on $X$, it is not necessarily a sheaf. But we can fix this use \'etal\'e spaces!\\
 
-Let $f^*_\text{psh}\mathcal{G}$ be the presheaf defined by 
+Let $f^{-1}_\text{psh}\mathcal{G}$ be the presheaf defined by 
 \[
-	\left(f^*_\text{psh}\mathcal{G}\right)(U) := \colim\limits_{V \supseteq f[U]}\, \mathcal{G}(V).
+	\left(f^{-1}_\text{psh}\mathcal{G}\right)(U) := \colim\limits_{V \supseteq f[U]}\, \mathcal{G}(V).
 \]
 
 \begin{defn}
-	If $f:X \to Y$ is continuous and $\mathcal{G}$ is a sheaf on $Y$, then the \bemph{pullback} $f^*\mathcal{G}$ of $\mathcal{G}$ along $f$ is defined as the sheafification $f^*\mathcal{G} := \left(f^*_\text{psh}\mathcal{G}\right)^+$ of the presheaf $f^*_\text{psh}\mathcal{G}$.
+	If $f:X \to Y$ is continuous and $\mathcal{G}$ is a sheaf on $Y$, then the \bemph{pullback} $f^{-1}\mathcal{G}$ of $\mathcal{G}$ along $f$ is defined as the sheafification $f^{-1}\mathcal{G} := \left(f^{-1}_\text{psh}\mathcal{G}\right)^+$ of the presheaf $f^{-1}_\text{psh}\mathcal{G}$.
 \end{defn}
 
 
 Though the construction of the pullback sheaf is much more involved than that of the pushforward, it still has some nice properties, such as:
 
 \begin{prop}
-	Let $f: X \to Y$ be continuous and $\mathcal{G}$ a sheaf on $Y$. Then the stalk of the pullback $f^*\mathcal{G}$ at $x \in X$ is given by 
+	Let $f: X \to Y$ be continuous and $\mathcal{G}$ a sheaf on $Y$. Then the stalk of the pullback $f^{-1}\mathcal{G}$ at $x \in X$ is given by 
 	\[
-		\left(f^*\mathcal{G}\right)_x = \mathcal{G}_{f(x)}.
+		\left(f^{-1}\mathcal{G}\right)_x = \mathcal{G}_{f(x)}.
 	\]
 \end{prop}
 \begin{proof}
 	Since the sheafification of a presheaf preserves stalks (by construction), we need only check that the stalks of $f^*_\text{psh}\mathcal{G}$ are of this form. At $x \in X$, we see that 
 	\[
-		\left(f^*\mathcal{G}\right)_x = \left(f^*_\text{psh}\mathcal{G}\right)_x := \colim\limits_{U \ni x}\,\colim\limits_{V \supseteq f[U]}\, \mathcal{G}(V) = \colim\limits_{V \ni f(x)}\, \mathcal{G}(V) =: \mathcal{G}_{f(x)}. \qedhere
+		\left(f^{-1}\mathcal{G}\right)_x = \left(f^{-1}_\text{psh}\mathcal{G}\right)_x := \colim\limits_{U \ni x}\,\colim\limits_{V \supseteq f[U]}\, \mathcal{G}(V) = \colim\limits_{V \ni f(x)}\, \mathcal{G}(V) =: \mathcal{G}_{f(x)}. \qedhere
 	\]
 \end{proof}
 
+\begin{thm}
+	\label{thm:pullback_pushforward_adjunction}
+	Let $f:X \to Y$ be a continuous map, then we have an adjunction $f^{-1} \dashv f_*$ of functors between $\Sh(X)$ and $\Sh(Y)$. That is, we have canonical isomorphisms
+	\[
+		\Hom_{\Sh(X)}(f^{-1}\mathcal{G}, \mathcal{F}) \cong \Hom_{\Sh(Y)}(\mathcal{G}, f_*\mathcal{F})
+	\]
+	which are natural in both $\mathcal{G} \in \Sh(Y)$ and $\mathcal{F} \in \Sh(X)$.
+\end{thm}
 
 % pullback sheaf and étalé space
 
+\subsection{Exactness for sheaves}
+\label{subsec:A_3_exactness_for_sheaves}
+Since the `image' of a sheaf is not necssarily a sheaf, it is no longer immediately obvious how to define mono-/epi-/isomorphisms of sheaves. We may first guess that a morphism of sheaves $\varphi$ is mono/epi/iso if and only if all of its components $\varphi_U$ is mono/epi/iso, but this turns out not to be the useful notion. 
+
+\begin{defn}
+	A morphism $\varphi : \mathcal{F} \to \mathcal{G}$ of sheaves of on $X$ is said to be a \bemph{monomorphism}/\bemph{epimorphism}/\bemph{isomorphism} if the induced maps $\varphi_x : \mathcal{F}_x \to \mathcal{G}_x$ on stalks are injective/surjective/bijective, respectively, for all $x \in X$. Similarly, a sequence
+	\[
+		\begin{tikzcd}
+			\cdots \rar & \mathcal{F}_{i-1} \rar["\varphi_{i-1}"] & \mathcal{F}_i \rar["\varphi_i"] & \mathcal{F}_{i+1} \rar & \cdots
+		\end{tikzcd}
+	\]
+	of sheaves is said to be \bemph{exact} if the corresponding sequences of stalks are exact for all $x \in X$.
+\end{defn}
+
+As it turns out, injectivity of induced maps of stalks is equivalent to injectivity of local components $\varphi_U$ at all opens $U \subseteq X$, so the notion of a {subsheaf} is exactly what we think it is: $\mathcal{F}$ is a \bemph{subsheaf} of $\mathcal{G}$ if $\mathcal{F}(U)$ is a subset (subgroup, subring, etc.) of $\mathcal{G}(U)$ for each $U$ and the restriction maps agree.
+
+\begin{defn}
+	If $\mathcal{F}, \mathcal{G} \in \Sh(X)$ are sheaves of abelian groups (or modules, rings, etc.) then the \bemph{kernel} of a morphism $\varphi : \mathcal{F} \to \mathcal{G}$ is the subsheaf $\kersh(\varphi)$ of $\mathcal{F}$ whose sections $\kersh(\varphi)(U)$ are exactly the kernel $\ker(\varphi_U)$ of the component $\varphi_U$ of $\varphi$ at $U \subseteq X$.
+\end{defn}
+
+This satisfies some of the basic properties you think of, such as...
+\begin{prop}
+	Suppose that $\varphi : \mathcal{F} \to \mathcal{G}$ is a morphism of sheaves of abelian group (or modules, rings, etc.) on $X$. The following are equivalent:
+	\begin{enumerate}[(i)]
+		\item $\varphi$ is injective;
+		\item $\kersh(\varphi)$ is the zero sheaf;
+		\item the sequence $0 \to \mathcal{F} \xrightarrow{\varphi} \mathcal{G}$ is exact at $\mathcal{F}$.
+	\end{enumerate}
+	Similarly, $\varphi$ is surjective if and only if $\mathcal{F} \xrightarrow{\varphi} \mathcal{G} \to 0$ is exact at $\mathcal{G}$.
+\end{prop}
+
+
 
 \subsection{Ringed spaces}
+\label{subsec:A_4_ringed_spaces} % (locally) ringed spaces & their morphisms
 We will be especially interested in rings of commutative rings. When a space has a sheaf of (commutative) rings, we call it a \emph{ringed space}, and when its stalks are local we say that $X$ is \bemph{locally ringed}.
-\label{subsec:A_3_ringed_spaces} % (locally) ringed spaces & their morphisms
 \begin{defn}
 	A \bemph{ringed space} is a pair $(X, \ints_X)$, where $X$ is a topological space, and a sheaf $\ints_X$ of commutative rings on $X$, called its \bemph{structure sheaf}. If all of the stalks $\ints_{X,x}$ of $\ints_X$ are local rings (i.e. have a unique maximal ideal), then we say that $(X, \ints_X)$ is a \bemph{locally ringed space}. 
 \end{defn}
@@ -223,3 +263,30 @@ We sometimes omit $\ints_X$ from the notation and just say that $X$ is a (locall
 	\end{enumerate}
 \end{eg}
 
+\begin{defn}
+	A \bemph{morphism} $f : (X, \ints_X) \to (Y, \ints_Y)$ \bemph{of ringed spaces} consists of a continuous map $f : X \to Y$ and a sheaf morphism $f^\# : \ints_Y \to f_*\ints_X$. If, additionally, $X$ and $Y$ are \emph{locally} ringed spaces, then we say that $f : (X, \ints_X) \to (Y, \ints_Y)$ is a \bemph{morphism of locally ringed spaces} if the induced maps $f^\#_p : \ints_{Y, p} \to (f_*\ints_X)_p$ of stalks are all local homomorphisms, i.e. the maximal of $\ints_{Y, p}$ is mapped into the maximal of $(f_*\ints_{X})_p$.
+\end{defn}
+
+\subsubsection{\texorpdfstring{$\ints_X$}{O}-modules on ringed spaces}
+\label{subsubsec:A_4_1_O-modules}
+If we put another sheaf on a ringed space, we may wish that it is compatible with the structure sheaf $\ints_X$ in some way. This naturally leads to the notion of an \bemph{$\ints_X$-module}.
+
+\begin{defn}
+	Let $(X, \ints_X)$ be a ringed space. An \bemph{$\ints_X$-module} is a sheaf $\mathcal{F}$ of abelian groups on $X$, along with a compatible $\ints_X(U)$-module structure on $\mathcal{F}(U)$ for each open $U \subseteq X$. Here `compatible' just means means that if $U \supseteq V$ are opens then the following diagram commutes:
+	\[
+		\begin{tikzcd}
+			\ints_X(U) \times \mathcal{F}(U) \rar \dar["\rho^U_V \times \rho^U_V"'] & \mathcal{F}(U) \dar["\rho^U_V"] \\
+			\ints_X(V) \times \mathcal{F}(V) \rar & \mathcal{F}(V)
+		\end{tikzcd}
+	\]
+	where the horizontal arrows are those arising from the $\ints_X(U)$-module structure on $\mathcal{F}(U)$, and the same for $V$. An \bemph{$\ints_X$-algebra} is a sheaf $\mathcal{F}$ of rings which is also an $\ints_X$-module.
+\end{defn}
+
+One checks that this diagram commuting just says that the restriction $\rho^U_V(\lambda m)$ of the product $\lambda m$ is equal to the product $\rho^U_V (\lambda) \rho^U_V(m)$ of the respective restrictions, where $\lambda \in \ints_X(U)$ and $m \in \mathcal{F}(U)$.
+
+\begin{eg}
+	\begin{enumerate}[(i)]
+		\item Let $X$ be a space, $R$ a commutative ring, and $M$ a module over $R$. We may equip $X$ with the constant sheaf $\underline{R}$, making $(X,\underline{R})$ a ringed space (though not necessarily locally ringed). Then the constant sheaf $\underline{M}$ on $(X,\underline{R})$ becomes an $\underline{R}$-module;
+		\item If $X$ is a complex manifold, let $\ints_X = \mathrm{Hol}(-, \C)$ denote the sheaf of holomorphic functions. This makes $(X, \ints_X)$ a locally ringed space. The sheaf $\mathcal{M} := \mathrm{Mer}(-, \C)$ of meromorphic functions is then an $\ints_X$-algebra.
+	\end{enumerate}
+\end{eg}
