@@ -1,0 +1,232 @@
+\section{Topological fundamental groups via covering spaces}
+\label{sec:3_pi_1_as_Aut(Fib)}
+\subsection{The need for an algebraic definition of \texorpdfstring{$\pi_1$}{π1}}
+\label{subsec:3_1_why_Zariski_sucks}
+Recall that the usual fundamental group $\pi_1(X,x_0)$ is defined as the group of homotopy classes of loops in $X$ based at $x_0 \in X$. Since any scheme has an underlying topological space, we may then ask why we shouldn't just define the fundamental group of a scheme to be the fundamental group of the underlying Zariski topological space. While we can do this, there are two main reasons why this definition is bad:
+
+\begin{enumerate}[(i)]
+	\item The underlying topological space of a scheme is far from containing all of the information about said scheme. For instance, though $\Spec(\F_p)$ and $\Spec(\C)$ are both one-point spaces (and thus homeomorphic), as schemes they are far from isomorphic.
+	\item Homotopy in the Zariski topology is far from meaningful. In fact, the spectrum of any integral domain may be shown to be contractible in the Zariski topology!
+\end{enumerate}
+
+In this section, we will realise a canonical isomorphism that allows for a definition of $\pi_1(X,x_0)$ which is completely independent of homotopy (although secretly it will work because of the existence of a universal covering space).
+
+\paragraph{Warning.} Since this section is mainly just for intuition, it may be a bit sparse on examples.
+
+
+\subsection{Covering spaces in more detail}
+\label{subsec:3_2_covering_spaces_in_detail}
+All of our discussion of the classical theory of covering spaces will be done over `nice' topological spaces (path connected and locally path connected). Recall from Definition \ref{defn:covering_space} the notion of a \emph{covering space}. These are continuous surjections that locally look like $X \sqcup \cdots \sqcup X \epi X$, or more precisely, they are continuous surjections $p : \wh{X} \epi X$ such that $X$ admits an open cover $\{U_i\}_i$ such that each $p^{-1}[U_i]$ is a disjoint union of copies of $U_i$.
+
+\begin{eg}
+	\begin{enumerate}[(i)]
+		\item Let $S^1 \subseteq \C$ denote the circle group. The map $p: S^1 \epi S^1$ given by $z \mapsto z^n$ is both continuous and surjective by definition. We see that the we can cover $S^1$ by the two open subsets $U_{\pm} := S^1 \setminus \{\pm 1\}$, each homemorphic to an open interval. The preimage of $U_{\pm}$ looks like 
+		\[
+			p^{-1}[U_{\pm}] = S^1 \setminus \left\{\pm e^{2 \pi i k/n} \,\,\middle|\,\, k =0,1,\ldots, n-1\right\},
+		\]
+		and on each of the components of this $p$ restricts to a homeomorphism. So this is indeed a covering space.
+		\item Similarly, let $\wt{p} : \R \epi S^1;\, x \mapsto e^{2\pi i x}$. Then the preimage of each $U_{\pm}$ under this is 
+			\[
+				\wt{p}^{-1}[U_{+}] = \coprod_{n \in \Z} \left(n-\frac{1}{2}, n + \frac{1}{2}\right), \qquad \wt{p}^{-1}[U_{-}] = \coprod_{n\in \Z} (n, n+1),
+			\]
+			and $\wt{p} : \R \epi S^1$ restricts to a homeomorphism on each of the components of this. We see that $\wt{p}$ is also a covering space. \qedhere
+	\end{enumerate}
+\end{eg}
+
+\begin{defn}
+	Let $X$ be a space, and $p_i : \wh{X}_i \epi X$ be two covering spaces ($i=1,2$). A \bemph{morphism of covering spaces} $\varphi : p_1 \to p_2$ is a continuous map $\varphi : X_1 \to X_2$ such that $p_1 = p_2 \circ \varphi$. The \bemph{category of covers of $X$}, $\Cov(X)$, is the category whose objects are covers of $X$, and whose morphisms are these morphisms of covers of $X$.
+\end{defn}
+
+We note that this category comes equipped with a family of functors to $\Set$, called the \bemph{fibre functors}. For $x_0 \in X$, the fibre functor at $x_0$ is given by 
+\[
+	\Fib_{x_0} : \Cov(X) \to \Set;\quad p \mapsto p^{-1}[\{x_0\}].
+\]
+The point of this section will be to prove the claim that the automorphism group of $\Fib_{x_0}$ is canonically isomorphic to the fundamental group $\pi_1(X, x_0)$, and thus provide us with a path for defining fundamental groups for schemes.\\
+
+A lot of this will follow from the compatibility of covering spaces with lifts. There are two main results here: the \emph{homotopy lifting property}, and the \emph{unique lift property}.
+
+\begin{thm}[Homotopy lifting property; HLP]
+	\label{thm:HLP}
+	Let $X$ and $Y$ be PC, LPC spaces. Let $p: \wh{X} \epi X$ be a covering space, $\{f_t : Y \to X\}_{t \in [0,1]}$ a homotopy of maps $Y \to X$, and $g_0 : Y \to \wh{X}$ a continuous lift of $f_0$ through $p$. Then there exists a unique homotopy $\{\wh{f}_t : Y \to \wh{X}\}_{t \in [0,1]}$ lifting $\{f_t\}_t$ such that $\wh{f}_0 = g_0$.
+\end{thm}
+\begin{proof}
+	Omitted. See \cite[Thm.~1.7]{Hatcher2001-gv} for a proof for $p: \R \to S^1$ which generalises to all covers.
+\end{proof}
+
+This has some immediate corollaries:
+
+\begin{cor}
+	\label{cor:unique_path_lifts}
+	Let $X$ be a PC, LPC space, $p:\wh{X} \epi X$ a covering space, and $x_0 \in X$. Let $\gamma : [0,1] \to X$ be a path starting at $x_0$. For each $\wh{x}_i \in p^{-1}[\{x_0\}]$ there is a unique path $\wh{\gamma}_i : [0,1] \to \wh{X}$ lifting $\gamma$ starting at $\wh{x}_i$.
+\end{cor}
+\begin{proof}
+	This is immediate from the homotopy lifting property (Theorem \ref{thm:HLP}) applied with $Y = \{\ast\}$.
+\end{proof}
+
+\begin{cor}
+	\label{cor:induced_maps_of_covers}
+	Let $p : \wh{X} \epi X$ be a covering space, $x_0 \in X$, and $\wh{x}_0 \in \wh{X}$. Then $p$ induces an injective homomorphism $p_* : \pi_1(\wh{X}, \wh{x}_0) \mono \pi_1(X,x_0)$, and thus we may view $\pi_1(\wh{X}, \wh{x}_0)$ as a subgroup of $\pi_1(X,x_0)$, consisting of homotopy classes of the $x_0$-loops in $X$ whose unique lift to $\wh{X}$ at $\wh{x}_0$ are also loops.
+\end{cor}
+\begin{proof}
+	The homomorphism $p_*$ is given by $p_*([\gamma]) := [p \circ \gamma]$, which we may verify to respect concatenation of paths. Injectivity follows from the homotopy lifting property (Theorem \ref{thm:HLP}), since there is a \emph{unique} lift of $p \circ \gamma$ based at $\wh{x}_0$.
+\end{proof}
+
+\begin{thm}[Unique lift property; ULP]
+	\label{thm:ULP}
+	Let $X$ and $Y$ be PC, LPC spaces, $p: \wh{X} \epi X$ a covering space, and $f : Y \to X$ a continuous map. If $\wh{f}_i : Y \to \wh{X}$ are lifts of $f$ through $p$ ($i = 1,2$), then they either agree everywhere or they agree nowhere. That is, if $\wh{f}_1(y) = \wh{f}_2(y)$ for \emph{some} $y \in Y$, then $\wh{f}_1 = \wh{f}_2$.
+\end{thm}
+\begin{proof}
+	Let $A \subseteq Y$ be the set of $y \in Y$ such that $\wh{f}_1(y) = \wh{f}_2(y)$, and $B = Y \setminus A$ its complement. Our aim is to show that $A$ and $B$ are both open. Since $Y$ is connected and $A \sqcup B = Y$, we will then be able to conclude that one of $A$ or $B$ has to be empty, and the other must be all of $Y$. If $y \in A$, then consider a neighbourhood $U \ni f(y)$ such that $p^{-1}[U] = \coprod_i \wh{U}_i$ and $p$ restricts to homeomorphisms $g_i := p|_{\wh{U}_i} : \wh{U}_i \iso U$ is a homeomorphism (which exists since $p$ is a cover). Let $V = f^{-1}[U]$, so that $f|_V : V \to U$. Then there must be a unique $j$ such that $\wh{f}_1(y) = \wh{f}_2(y) \in \wh{U}_j$, and since $g_j$ is a homeomorphism such that $g_j \circ \wh{f}_1|_{V} = f|_{V} = g_j \circ \wh{f}_2|_{V}$, we conclude that 
+	\[
+		\wh{f}_1|_{V} = g_j^{-1} \circ f|_{V} = \wh{f}_2|_{V} : V \to \wh{U}_j,
+	\]
+	and consequently that if $y \in A$, then $A$ contains some open neighbourhood $V \ni y$, i.e. $A$ is open. We may similarly conclude, for $y' \in B$ and $U' \ni f(y')$ an open neighbourhood, that $p^{-1}[U'] = \coprod_i \wh{U}_i'$ with similar homeomorphisms $g_i' = p|_{\wh{U}'_i}$. Let $V' = f^{-1}[U']$, so that $f|_{V'} : V' \to U'$. Since $\wh{f}_1(y') \neq \wh{f}_2(y')$, we may also conclude that 
+	\[
+		\wh{f}_1|_{V'} = g_{j_1}^{-1} \circ f|_{V'} : V' \to \wh{U}_{j_1}' \quad \text{and} \quad \wh{f}_2|_{V'} = g_{j_2}^{-1} \circ f|_{V'}:V' \to \wh{U}_{j_2}',
+	\]
+	which agree nowhere since their codomains $\wh{U}'_{j_1}, \wh{U}'_{j_2}$ are disjoint. So $B$ contains $V'$, hence is also open. Since $Y$ is connected and $Y = A \sqcup B$, we thus conclude one of $A,B$ is $\varnothing$, and the other is $Y$.
+\end{proof}
+
+\begin{cor}[Lifting criterion]
+	\label{cor:lifting_criterion}
+	Let $X$ and $Y$ be PC, LPC spaces, $p: \wh{X} \epi X$ a covering space, and $f: Y \to X$. Let $y_0 \in Y$ and $f(y_0) = x_0$, and let $\wh{x}_0 \in p^{-1}[\{x_0\}]$. Then there exists a lift $\wh{f} : Y \to \wh{X}$ with $\wh{f}(y_0)=\wh{x}_0$ if and only if $f_*\pi_1(Y, y_0) \subseteq p_* \pi_1(\wh{X}, \wh{x}_0)$. Such a lift is unique.
+\end{cor}
+\begin{proof}
+	The `only if' direction is pretty immediate: if such $\wh{f} : Y \to \wh{X}$ exists, then
+	\[
+		f_* \pi_1(Y, y_0) = (p \circ \wh{f})_* \pi_1(Y, y_0) = p_* (\wh{f}_* \pi_1(Y, y_0)) \subseteq p_* \pi_1(\wh{X}, \wh{x}_0).
+	\]
+	For the `if' direction, for each $y \in Y$ choose some $\gamma_y : [0,1] \to Y$ joining $y_0$ to $y$. Then by Corollary \ref{cor:unique_path_lifts} there is a unique lift $\wh\delta_y : [0,1] \to \wh{X}$ of $\delta_y := f \circ \gamma_y$ with $\wh{\delta}_y(0) = \wh{x}_0$. We define $\wh{f}(y) := \wh\delta_y (1)$, which may be verified to be a lift of $f$. The ULP (Theorem \ref{thm:ULP}) gives us uniqueness.
+\end{proof}
+
+
+\subsection{The universal covering space and deck transformations}
+\label{subsec:3_3_universal_covering_space}
+For each $x_0 \in X$, we will construct a \emph{universal} covering space $\wt{p} : \wt{X}_{x_0} \epi X$, i.e. a covering space such that every other cover $p : \wh{X} \epi X$ is of the form $p = f \circ \wt{p}$, for $f \in \Hom_X(\wt{X}, \wh{X})$ a surjective morphism of covers. This will turn out to be a representing object for our functor $\Fib_{x_0}$, and will be the connection between $\pi_1(X, x_0)$ and $\Aut(\Fib_{x_0})$. To construct such a space, we will need another assumption on $X$ -- that it is \emph{semilocally simply connected}.
+
+\begin{defn}
+	Let $X$ be a PC, LPC space. A neighbourhood $U \subseteq X$ is called \bemph{semi-simply-connected} (or \bemph{SSC}) if every loop in $U$ is homotopic to a point in $X$, that is, if the induced map $\pi_1(U, u_0) \to \pi_1(X, u_0)$ is the zero map. We say that $X$ is \bemph{semilocally simply connected} or (\bemph{SLSC}) if it admits a cover by SSC neighbourhoods.
+\end{defn}
+
+We first define the set 
+\[
+	\wt{X}_{x_0} := \frac{\{\alpha:[0,1] \to X \mid \alpha(0)=x_0\}}{\text{homotopy w/ fixed ends}}
+\]
+of homotopy classes (with fixed endpoints) of paths in $X$ starting at $x_0$. We will endow $\wt{X}_{x_0}$ with a topology by declaring basic open neighbourhoods of $[\gamma] \in \wt{X}_{x_0}$ to be of the form 
+\[
+	\wt{U}_{[\gamma]} := \{[\gamma \cdot \eta] \mid \eta:[0,1] \to U \,\, \text{has}\,\, \eta(0)=\gamma(1)\}
+\]
+for $U \ni \gamma(1)$ an SSC neighbourhood. \Exc. Check that this defines a basis for a topology.
+
+\begin{thm}[Universality of $\wt{X}_{x_0}$]
+	\label{thm:universal_cover}
+	The space $\wt{X}_{x_0}$ is simply connected, and the map $\wt{p} : \wt{X}_{x_0} \epi X$ given by $\wt{p}([\gamma]) := \gamma(1)$ is a covering space. Moreover, $\wt{X}_{x_0}$ carries a monodromy left-action of $\pi_1(X, x_0)$, and if $p : \wh{X} \epi X$ is another cover and $\wh{x}_0 \in p^{-1}[\{x_0\}]$, then $\wh{X}$ is canonically isomorphic to the orbit space $p_*\pi_1(\wh{X},\wh{x}_0) \backslash \wt{X}_{x_0}$.
+\end{thm}
+\begin{proof}[Proof sketch]
+	First we show that $\wt{X}_{x_0}$ is path connected by defining a canonical lift $\wt{\gamma} : [0,1] \to \wt{X}_{x_0}$ of each $\gamma : [0,1] \to X$ by $\wt{\gamma}(t) := [\gamma_t]$, where $\gamma_t(s) := \gamma(s)$ for $s \leq t$ and $\gamma_t(s) := \gamma(t)$ for $s \geq t$. \Exc. Prove that the map $\wt{p}$ is continuous and surjective. We see that the preimage of an SSC neighbourhood $U\subseteq X$ under $\wt{p}$ is exactly 
+	\[
+		\wt{p}^{-1}[U] = \coprod_{[\alpha] \in \pi_1(X, x_0)} \wt{U}_{[\alpha \cdot \gamma]}
+	\]
+	where $\gamma : [0,1] \to X$ is any path ending in $U$, and since $U$ is path connected and SSC the restriction $\wt{p}|_{\wt{U}_{[\gamma]}} : \wt{U}_{[\gamma]} \to U$ is bijective, and thus by definition of the topology on $\wt{X}_{x_0}$ this must be a homeomorphism. So $\wt{p}$ is a cover. For simply connectedness we show that $\wt{p}_* \pi_1(\wt{X}_{x_0}, \wt{x}_0) = 0$, where $\wt{x}_0 \in \wt{X}_{x_0}$ is the constant path at $x_0$. By Corollary \ref{cor:induced_maps_of_covers}, we see that 
+	\[
+		\wt{p}_*\pi_1(\wt{X}_{x_0}, \wt{x}_0) = \{[\alpha] \in \pi_1(X, x_0) \mid \wt{\alpha} \text{ is a loop}\}.
+	\]
+	But the statement that $\wt{\alpha}$ is a loop says that $\wt{\alpha}(1)= \wt{\alpha}(0)$, and thus $\alpha_1 := \alpha$ is homotopic to $\alpha_0$ (which is the constant path at $x_0$). That is, $\wt{p}_*\pi_1(\wt{X}_{x_0}, \wt{x}_0)$ is trivial.\\
+	
+	The monodromy left-action of $\pi_1(X,x_0)$ is exactly by concatenation $[\alpha] \cdot [\gamma] := [\alpha \cdot \gamma]$. For a fixed cover $p:\wh{X} \epi X$ with basepoints $\wh{x}_0 \in \wh{X}$ and $x_0 \in X$, let $H := p_*\pi_1(\wh{X}, \wh{x}_0)$. We may then define $p_H : H \backslash \wt{X}_{x_0} \to X$ by $H [\gamma] \mapsto \gamma(1)$. Then we can verify $(p_H)_* \pi_1(H \backslash \wt{X}_{x_0}, H\wt{x}_0) = p_* \pi_1(\wh{X}, \wh{x}_0)$, and thus the lifting criterion (Corollary \ref{cor:lifting_criterion}) tells us that $(\wh{X}, \wh{x}_0)$ and $(H \backslash \wt{X}_{x_0}, H\wt{x}_0)$ are canonically isomorphic as based covers of $(X, x_0)$.
+\end{proof}
+
+
+\begin{cor}
+	\label{cor:representability_of_Fib}
+	The functor $\Fib_{x_0} : \Cov(X) \to \Set$ is represented by $\wt{X}_{x_0}$.
+\end{cor}
+\begin{proof}
+	Let $q:\wh{X} \epi X$ be a cover, and $x_0 \in X$. A morphism $\wt{X}_{x_0} \to \wh{X}$ of covers is exactly a lift of $\wt{p} : \wt{X}_{x_0} \epi X$ through $q$, and thus by the unique lifting property (Theorem \ref{thm:ULP}) they are uniquely determined by where they send $\wt{x}_0 \in \wt{X}_{x_0}$. But again, by the definition of a morphism such $\wt{x}_0$ must be mapped into $\Fib_{x_0}(q)$. Thus we get an injection $\Hom_{\Cov(X)}(\wt{X}_{x_0}, \wh{X}) \mono \Fib_{x_0}(q)$ by $\varphi \mapsto \varphi(\wt{x}_0)$. To prove this is surjective, it is enough to use the lifting criterion (Corollary \ref{cor:lifting_criterion}): since $\wt{X}_{x_0}$ is simply connected the image of $\pi_1(\wt{X}_{x_0}, \wt{x}_0)$ is contained in $q_*\pi_1(\wh{X}, \wh{x}_0)$, and thus for each $\wh{x}_i \in \Fib_{x_0}(q)$ there exists a unique morpism $\varphi \in \Hom_{\Cov(X)}(\wt{X}_{x_0}, \wh{X})$ sending $\wt{x}_0$ to $\wh{x}_i$.
+\end{proof}
+
+The automorphisms of $\wt{X} := \wt{X}_{x_0}$ as a cover of $X$ are called \bemph{deck transformations}. The Yoneda lemma then tells us that the group $\Aut(\wt{p})$ of deck transformations may be identified with $\Aut(\Fib_{x_0})$ for free! But we see, as a corollary of the `free monodromy action' stipulation of Theorem \ref{thm:universal_cover}, that the group of deck transformations may \emph{also} be identified with $\pi_1(X,x_0)$. So in the end, we get a canonical isomorphism...
+
+\begin{cor}
+	\label{cor:deck_transformation_equals_monodromy}
+	$\pi_1(X, x_0) \cong \Aut(\Fib_{x_0})$, when $X$ is LC, LPC, SLSC.
+\end{cor}
+
+
+\begin{eg}
+	It's not too hard to see that the universal covering space of $S^1$ is indeed $\R$. Not only is $\pi_1(\R, 0)$ trivial, but paths in $S^1$ (based at $1 = e^0 \in S^1$) are all homotopic to one of the `standard' paths $\gamma_A : [0,1] \to S^1;\,\, x \mapsto e^{2 \pi i A x}$, where $A \in \R$. We can `unravel' this path through $\wt{p} : \R \epi S^1$ to reveal a linear path from $0$ to $A \in \R$, which may be identified with the point $A \in \R$.\\
+
+	Since $\pi_1(S^1, 1) \cong \Z$, we expect the group of automorphisms of $\wt{p}: \R \epi S^1$ to be isomorphic to $\Z$. To each $n \in \Z$, the shift map $\R \to \R;\, x \mapsto x+n$ defines such a deck transformation, so the isomorphism of Corollary \ref{cor:deck_transformation_equals_monodromy} is rather explicit in this case.
+\end{eg}
+
+
+\subsection{The classification of covers}
+\label{subsec:3_4_classification_of_covers}
+Putting all of this together allows us to wrap up the classical theory of covering spaces in a nice little bow. Subgroups of $\pi_1(X, x_0)$ should now determine covering spaces and vice versa.
+
+\begin{thm}[Galois theory for covering spaces]
+	\label{thm:galois_theory_for_covering_spaces}
+	Let $X$ be a PC, LPC, SLSC space, and $x_0 \in X$. The map sending a based cover $p: (\wh{X}, \wh{x}_0) \epi (X, x_0)$ to the subgroup $p_*\pi_1(\wh{X}, \wh{x}_0) \subseteq \pi_1(X, x_0)$ is an isomorphism (up to isomorphisms of covers). That is, isomorphism classes of based covers of $X$ are in bijection with subgroups of $\pi_1(X, x_0)$.
+\end{thm}
+\begin{proof}
+	The inverse map is given by sending $H \leq \pi_1(X, x_0)$ to the orbit space $(H \backslash \wt{X}_{x_0}, H\wt{x}_0)$ under the monodromy action of $\pi_1(X, x_0)$ on $(\wt{X}_{x_0}, \wt{x}_0)$.
+\end{proof}
+
+Such a classification explicitly depends on the existence of a universal cover $\wt{X}_{x_0}$, but this is generally of infinite degree (i.e. the fibres are generally infinite). We run into a bit of an issue translating to the situation for schemes: our finite \'etale morphisms are just that -- finite! Perhaps the more useful setting for us for covers of finite degree.
+
+\subsubsection{The classification of finite covers}
+\label{subsubsec:3_4_1_finite_covers}
+% finite covers -- no universal cover but now a universal pro-object!
+% \pi_1 for finite covers ~ profinite completion of \pi_1
+For the last bit of this section, we are going to see what this theory looks like for finite covers. We've yet to define these, but this definition is really not too hard and relies on one observation.
+
+\begin{lemma}
+	If $p:\wh{X} \epi X$ is a covering space and $x_0, x_1 \in X$, then $\Fib_{x_0}(p)$ and $\Fib_{x_1}(p)$ are in bijection.
+\end{lemma}
+\begin{proof}
+	This is a bit overkill (usually this is one of the first results you prove about covering spaces), but the universal covers $\wt{X}_{x_0}$ and $\wt{X}_{x_1}$ are isomorphic as (unbased) covers of $X$, and thus we get bijections
+	\[
+		\Fib_{x_0}(p) \approx \Hom_{\Cov(X)}(\wt{X}_{x_0}, X) \approx \Hom_{\Cov(X)}(\wt{X}_{x_1}, X) \approx \Fib_{x_1}(p). \qedhere
+	\]
+\end{proof}
+
+\begin{defn}
+	Let $p : \wh{X} \epi X$ be a covering space and $x \in X$. The cardinality $\#\Fib_{x}(p)$ is called the \bemph{degree} of $p$, denoted $\deg(p)$. We say $p$ is a \bemph{finite cover} of $X$ if $\deg(p)$ is finite. We denote by $\FinCov(X)$ the full subcategory of finite covers of $X$.
+\end{defn}
+
+The fibre functor thus restricts to a functor
+\[
+	\mathrm{FinFib}_{x_0} : \FinCov(X) \to \mathbf{FinSet}.
+\]
+The distinction here is now this functor is no longer generally representable, since universal covers need not be of finite degree. But by universality, we may identify $\wt{X}$ as the inverse limit of \emph{all} of the finite covers of $X$. Thus, though $\Fib_{x_0}$ may be representable, our restricted functor $\mathrm{FinFib}_{x_0}$ is only \emph{pro}-representable by a \emph{pro}-object $\mathfrak{X} := \varprojlim_\alpha (\wh{X}_\alpha, p_{\alpha})$. To reiterate, the inverse limit of all of these finite covers exists in $\Cov(X)$, but need not generally exist in $\FinCov(X)$. In this case we think of the universal cover as a formal inverse limit (this is roughly what is meant by \emph{pro-object}; see a later talk). Consequently, the automorphism group of $\mathrm{FinFib}_{x_0}$ (again by the Yoneda lemma) may be given by 
+\[
+	\Aut(\mathrm{FinFib}_{x_0}) = \Aut_{\mathrm{pro-}\Cov(X)}(\mathfrak{X}) = \varprojlim_\alpha \Aut_{\Cov(X)}(\wh{X}_\alpha) \cong \wh{\pi_1}(X, x_0),
+\]
+where $\wh{\pi_1}(X, x_0)$ denotes the profinite completion of $\pi_1(X,x_0)$. We gain from this a very valuable insight:
+\begin{center}
+	\emph{The equivalent of the fundamental group for finite covers is $\wh{\pi_1}(X,x_0)$.}
+\end{center}
+It is for this reason we should expect that our \'etale fundamental groups will be profinite. We then get another correspondence for finite covers, which may be more 
+
+
+\begin{lemma}
+	\label{lemma:degree_equals_index_covers}
+	Let $p:(\wh{X}, \wh{x}_0) \to (X, x_0)$ be a based cover, and let $H := p_* \pi_1(\wh{X}, \wh{x}_0)$. Then $\deg(p) = [\pi_1(X, x_0) : H]$.
+\end{lemma}
+
+\begin{thm}
+	\label{thm:classification_finite_covers}
+	Let $X$ be a PC, LPC, SLSC space, and $x_0 \in X$. Then we have a bijection
+	\[\begin{tikzcd}
+		\begin{array}{c} \left\{ \bettersubstack{\text{Finite, based}\\\text{covers of }(X, x_0)} \right\} \end{array} && \begin{array}{c} \left\{  \bettersubstack{\text{Open subgroups} \\ \text{of }\wh{\pi_1}(X, x_0)} \right\} \end{array}
+		\arrow[curve={height=-24pt}, from=1-1, to=1-3]
+		\arrow[curve={height=-24pt}, from=1-3, to=1-1]
+	\end{tikzcd}\]
+	by sending a finite based cover $p: (\wh{X}, \wh{x}_0) \epi (X, x_0)$ to the image of $p_*\pi_1(\wh{X}, \wh{x}_0)$ in $\wh{\pi_1}(X, x_0)$.
+\end{thm}
+\begin{proof}
+	The open subgroups of $\wh{\pi_1}(X, x_0)$ are exactly the image of the finite index subgroups of $\pi_1(X, x_0)$. We then use Theorem \ref{thm:galois_theory_for_covering_spaces} along with Lemma \ref{lemma:degree_equals_index_covers}.
+\end{proof}
+
+
+
