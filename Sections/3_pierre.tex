@@ -6,7 +6,7 @@ Recall that the usual fundamental group $\pi_1(X,x_0)$ is defined as the group o
 
 \begin{enumerate}[(i)]
 	\item The underlying topological space of a scheme is far from containing all of the information about said scheme. For instance, though $\Spec(\F_p)$ and $\Spec(\C)$ are both one-point spaces (and thus homeomorphic), as schemes they are far from isomorphic.
-	\item Homotopy in the Zariski topology is far from meaningful. In fact, the spectrum of any integral domain may be shown to be contractible in the Zariski topology!
+	\item Homotopy in the Zariski topology is far from meaningful. In fact, if $X:=\Spec(R)$ is the spectrum of an integral domain $R$ then the map $H:X \times [0,1] \to X$ given by $H(\prid, 0) = \prid$ and $H(\prid, s) = (0)$ for $s >0$ defines an explicit deformation retract of $X$ onto $\{(0)\}$, so the spectrum of integral domains is contractible! % explicit deformation retract
 \end{enumerate}
 
 In this section, we will realise a canonical isomorphism that allows for a definition of $\pi_1(X,x_0)$ which is completely independent of homotopy (although secretly it will work because of the existence of a universal covering space).
@@ -133,7 +133,7 @@ for $U \ni \gamma(1)$ an SSC neighbourhood. \Exc. Check that this defines a basi
 	\]
 	But the statement that $\wt{\alpha}$ is a loop says that $\wt{\alpha}(1)= \wt{\alpha}(0)$, and thus $\alpha_1 := \alpha$ is homotopic to $\alpha_0$ (which is the constant path at $x_0$). That is, $\wt{p}_*\pi_1(\wt{X}_{x_0}, \wt{x}_0)$ is trivial.\\
 	
-	The monodromy left-action of $\pi_1(X,x_0)$ is exactly by concatenation $[\alpha] \cdot [\gamma] := [\alpha \cdot \gamma]$. For a fixed cover $p:\wh{X} \epi X$ with basepoints $\wh{x}_0 \in \wh{X}$ and $x_0 \in X$, let $H := p_*\pi_1(\wh{X}, \wh{x}_0)$. We may then define $p_H : H \backslash \wt{X}_{x_0} \to X$ by $H [\gamma] \mapsto \gamma(1)$. Then we can verify $(p_H)_* \pi_1(H \backslash \wt{X}_{x_0}, H\wt{x}_0) = p_* \pi_1(\wh{X}, \wh{x}_0)$, and thus the lifting criterion (Corollary \ref{cor:lifting_criterion}) tells us that $(\wh{X}, \wh{x}_0)$ and $(H \backslash \wt{X}_{x_0}, H\wt{x}_0)$ are canonically isomorphic as based covers of $(X, x_0)$.
+	The monodromy left-action of $\pi_1(X,x_0)$ is exactly by concatenation $[\alpha] \cdot [\gamma] := [\alpha \cdot \gamma]$. For a fixed cover $p:\wh{X} \epi X$ with basepoints $\wh{x}_0 \in \wh{X}$ and $x_0 \in X$, let $H := p_*\pi_1(\wh{X}, \wh{x}_0)$. We may then define $p_H : H \backslash \wt{X}_{x_0} \to X$ by $H [\gamma] \mapsto \gamma(1)$. Then we can verify $(p_H)_* \pi_1(H \backslash \wt{X}_{x_0}, H\wt{x}_0) = H = p_* \pi_1(\wh{X}, \wh{x}_0)$, and thus the lifting criterion (Corollary \ref{cor:lifting_criterion}) tells us that $(\wh{X}, \wh{x}_0)$ and $(H \backslash \wt{X}_{x_0}, H\wt{x}_0)$ are canonically isomorphic as based covers of $(X, x_0)$.
 \end{proof}
 
 
@@ -149,7 +149,7 @@ The automorphisms of $\wt{X} := \wt{X}_{x_0}$ as a cover of $X$ are called \bemp
 
 \begin{cor}
 	\label{cor:deck_transformation_equals_monodromy}
-	$\pi_1(X, x_0) \cong \Aut(\Fib_{x_0})$, when $X$ is LC, LPC, SLSC.
+	$\pi_1(X, x_0) \cong \Aut(\Fib_{x_0})$, when $X$ is PC, LPC, SLSC.
 \end{cor}
 
 
@@ -166,7 +166,7 @@ Putting all of this together allows us to wrap up the classical theory of coveri
 
 \begin{thm}[Galois theory for covering spaces]
 	\label{thm:galois_theory_for_covering_spaces}
-	Let $X$ be a PC, LPC, SLSC space, and $x_0 \in X$. The map sending a based cover $p: (\wh{X}, \wh{x}_0) \epi (X, x_0)$ to the subgroup $p_*\pi_1(\wh{X}, \wh{x}_0) \subseteq \pi_1(X, x_0)$ is an isomorphism (up to isomorphisms of covers). That is, isomorphism classes of based covers of $X$ are in bijection with subgroups of $\pi_1(X, x_0)$.
+	Let $X$ be a PC, LPC, SLSC space, and $x_0 \in X$. The map sending a based cover $p: (\wh{X}, \wh{x}_0) \epi (X, x_0)$ to the subgroup $p_*\pi_1(\wh{X}, \wh{x}_0) \subseteq \pi_1(X, x_0)$ is a bijection (up to isomorphisms of covers). That is, isomorphism classes of based covers of $X$ are in bijection with subgroups of $\pi_1(X, x_0)$.
 \end{thm}
 \begin{proof}
 	The inverse map is given by sending $H \leq \pi_1(X, x_0)$ to the orbit space $(H \backslash \wt{X}_{x_0}, H\wt{x}_0)$ under the monodromy action of $\pi_1(X, x_0)$ on $(\wt{X}_{x_0}, \wt{x}_0)$.
