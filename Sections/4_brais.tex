@@ -1,0 +1,108 @@
+\section{Geometric points and the \'etale fundamental group}
+\label{sec:4_efg}
+In this section we will build to a definition of the \'etale fundamental group analogous to that of \S\ref{sec:3_pi_1_as_Aut(Fib)}. Namely, for $S$ a scheme, we will consider the category $\Fet_S$ of finite \'etale covers of $S$ and associate to it a fibre functor; the \'etale fundamental group will then be the automorphism group of this fibre functor.
+
+
+\subsection{Geometric points as basepoints}
+\label{subsec:4_1_Fet_S}
+Fix a scheme $S$. We define the category $\Fet_S$, whose objects are schemes $X$ equipped with finite \'etale covers $\phi : X \epi S$, and whose morphisms $f : (X, \phi) \to (X', \phi')$ are morphisms of schemes such that $\phi = \phi' \circ f$. We may sometimes write just $X \in \Fet_S$ or $\phi \in \Fet_S$.\\ 
+
+In order to complete our construction, we will need a good notion of the \emph{fibre} of $(X, \phi) \in \Fet_S$ at a `point' of $S$. The correct choice here is the notion of a \emph{geometric fibre}.
+
+\begin{defn}
+	A \bemph{geometric point} of $S$ is a morphism $\overline{s} : \Spec(\Omega) \to S$, where $\Omega$ is an algebraically closed field. The \bemph{geometric fibre} of $(X, \phi) \in \Fet_S$ at $\overline{s}$ is then the pullback $\Fib_{\overline{s}}(X) := X \times_S \Spec(\Omega)$, thought of as its underlying set.
+\end{defn}
+
+\begin{eg}
+	\begin{enumerate}[(i)]
+		\item Let $S := \Spec(\C[t,t^{-1}]) = \A^1_{\C} \setminus\{0\}$ and $X := \Spec(\C[x,x^{-1}]) = \A^1_\C \setminus \{0\}$, considered with the finite \'etale cover $\phi_n : X \to S$ given by $\phi_n(z) := z^n$ (which is induced by $\ints(S) \mono \ints(X);\, t \mapsto x^n$). Consider the geometric point $\ol{s} : \Spec(\C) \mono S$ associated to the evaluation map $\ev_1 : \C[t,t^{-1}] \epi \C$ at $1$. Using Proposition \ref{prop:fibre_product_affine_schemes}, we may then compute that the geometric fibre $\Fib_{\ol{s}}(X)$ of $\phi_n$ is given by 
+		\[
+			X \times_S \Spec(\C) = \Spec(\C[x, x^{-1}] \otimes_{\C[t,t^{-1}]} \C) = \Spec(\C[x,x^{-1}] \otimes_{\C[x^n, x^{-n}]} \C).
+		\]
+		We may decompose $\C[x,x^{-1}] = \bigoplus_{r=0}^{n-1} x^r \C[x^n, x^{-n}]$, and thus we see that $\C[x,x^{-1}] \otimes_{\C[x^n, x^{-n}]} \C \cong \C^{\oplus n}$. So the geometric fibre is $\Fib_{\ol{s}}(X) = \Spec(\C^{\oplus n})$, which is just $n$ points. When viewed as a subscheme of $X$, these correspond to the $n$th roots of unity in $\C^\times$;
+		\item Let $K$ be a perfect field, $L/K$ a finite separable field extension of degree $n$, and $\alpha \in L$ a primitive element (i.e. such that $L = K(\alpha)$). If $X = \Spec(L)$ and $S = \Spec(K)$, then we have already seen that the associated morphism $\phi : X \epi S$ is a finite \'etale cover. Fix an algebraic closure $\ol{K}/K$ and let $\ol{s} : \Spec(\ol{K}) \to \Spec(K)$ be the associated geometric point. Then we can compute that the fibre $\Fib_{\ol{s}}(X)$ is given by 
+		\[
+			X \times_S \Spec(\ol{K}) = \Spec(L \otimes_K \ol{K}).
+		\]
+		By properties of simple extensions, we know that $\{1, \alpha, \ldots, \alpha^{n-1}\}$ is a $K$-basis for $L$, and thus we may think of $L = K \oplus \alpha K \oplus \cdots \oplus \alpha^{n-1} K$, and consequently
+		\[
+			L \otimes_K \ol{K} = (K \oplus \alpha K \oplus \cdots \oplus \alpha^{n-1} K) \otimes_K \ol{K} \cong \ol{K}^{\oplus n},
+		\]
+		and thus $\Fib_{\ol{s}}(X) = \Spec(\ol{K}^{\oplus n})$ consists of $n$ points, which correspond to the $n$ Galois conjugates of $\alpha$ in $\ol{K}$.
+	\end{enumerate}
+\end{eg}
+
+It may seem like we are losing information simply by forgetting the $\Omega$-scheme structure on $X\times_S \Spec(\Omega)$, but this structure is completely recoverable.
+\begin{prop}
+	Let $\phi : X \epi S$ be a finite \'etale cover, and $\ol{s}: \Spec(\Omega) \to S$ a geometric point. The pullback $X \times_S \Spec(\Omega)$ may be identified with $\Spec(\Omega^{\oplus n})$ as a scheme, for some $n$. Consequently, $X \times_S \Spec(\Omega)$ is discrete.
+\end{prop}
+\begin{proof}
+	Omitted, see \cite{szamuely09}.  
+\end{proof}
+
+\begin{prop}
+	Let $S$ be a scheme and $\ol{s} : \Spec(\Omega) \to S$ a geometric point. The assignment $\Fib_{\ol{s}} : \Fet_S \to \Set$ of geometric fibres at $\ol{s}$ defines a functor.
+\end{prop}
+\begin{proof}
+	The pullback over $S$ is a categorical product in the category $\mathbf{Sch}_S$ of schemes over $S$, and thus any morphism $f:(X,\phi) \to (X', \phi')$ in $\Fet_S \subseteq \mathbf{Sch}_S$ induces a unique morphism $X \times_S \Spec(\Omega) \to X' \times_S \Spec(\Omega)$ of $\Omega$-schemes. Forgetting the $\Omega$-scheme structure, this defines a canonical function $\Fib_{\overline{s}}(X) \to \Fib_{\overline{s}}(X')$.
+\end{proof}
+
+
+\begin{prop}
+	\label{prop:isomorphic_fibre_functors}
+	Let $S$ be a connected scheme. Given two geometric points $\ol{s} : \Spec(\Omega) \to S, \ol{s}' : \Spec(\Omega') \to S$, there is a (non-canonical) natural isomorphism $\lambda : \Fib_{\ol{s}} \ISO \Fib_{\ol{s}'}$.
+\end{prop}
+
+\subsection{The \'etale fundamental group and first properties}
+\label{subsec:4_2_efg}
+Now that we have a fibre functor, we can use our reinterpretation of the usual fundamental group (\S\ref{sec:3_pi_1_as_Aut(Fib)}) to give our first definition of the \emph{\'etale fundamental group}.
+
+\begin{defn}
+	Let $S$ be a scheme, and $\overline{s} : \Spec(\Omega) \to S$ a geometric point. The \bemph{\'etale fundamental group} of $S$ with respect to $\overline{s}$, denoted $\pi_1^{\et}(S, \overline{s})$, is the automorphism group of the fibre functor $\Fib_{\overline{s}} : \Fet_S \to \Set$.
+\end{defn}
+
+We will see later that this group carries a canonical topology (the \emph{Krull} topology), but for now we can just view it as a group. We get 
+
+\begin{prop}
+	\label{prop:etale_monodromy_action}
+	Let $S$ be a scheme, $\ol{s} : \Spec(\Omega) \to S$ a geometric point, and $X \in \Fet_S$. There is a canonical (continuous) action of $\pi_1^{\et}(S,\ol{s})$ on $\Fib_{\ol{s}}(X)$, and the image of the associated homomorphism $\pi_1^{\et}(S, \overline{s}) \to \Aut_{\Set}(\Fib_{\ol{s}}(X))$ is canonically isomorphic to the group of $\Fet_S$-automorphisms of $X$, hence $\Aut_{\Fet_S}(X)$ is a (continuous) quotient of $\pi_1^{\et}(S, \ol{s})$.
+\end{prop}
+
+\paragraph{Notation.} We may write $\Aut(X/S)$ or $\Aut_S(X)$ for the $\Fet_S$-automorphism group of $X$.
+
+\begin{proof}
+	The first observation is essentially by definition of natural transformations: to each $\eta \in \Aut(\Fib_{\ol{s}})$, we may take the action of $\eta$ on $X$ to be by its $X$-component $\eta_X \in \Aut(\Fib_{\ol{s}}(X))$. The continuity of the action with respect to the Krull topology will be seen in the next talk (it will follow immediately from the fact that $\Fib_S$ is pro-representable). Let $G$ denote the image of $\pi_1^{\et}(S, \ol{s})$ in $\Aut_{\Set}(\Fib_{\ol{s}}(X))$. It is clear that there is a homomorphism $\Aut(X/S) \to G$ by restricting each $\phi \in \Aut(X/S)$ to fibres. For the converse, it shall suffice to prove this in the case that $X=\Spec(B)$ and $S=\Spec(A)$ are affine. In such a case, the geometric fibre of $X$ is in bijection with the generators of $B$ over $A$, and thus automorphisms of the fibre correspond to automorphisms of $B$ as an $A$-algebra. The equivalence of categories $\mathbf{CAlg}_A^\text{op} \simeq \mathbf{AffSch}_S$ thus tells us that each automorphism of the geometric fibre of $X$ gives us a $\Fet_S$-automorphism of $X$.
+\end{proof}
+
+As a consequence of this proposition, we may now think of $\Fib_{\ol{s}}$ as a functor 
+\[
+	\Fib_{\ol{s}} : \Fet_S \to \pi_1^{\et}(S, \ol{s})\mathbf{-Set}
+\]
+valued in the category of left-$\pi_1^{\et}(S, \ol{s})$-sets.\\
+
+Much as in the case of usual fundamental groups, changing basepoints corresponds to some conjugation isomorphism.
+\begin{prop}
+	\label{prop:change_of_basepoint}
+	Let $S$ be a connected scheme, $\ol{s}:\Spec(\Omega) \to S$ and $\ol{s}' : \Spec(\Omega') \to S$ two geometric points, and $\lambda : \Fib_{\ol{s}} \ISO \Fib_{\ol{s}'}$ a natural isomorphism of fibre functors. Then $\lambda$ induces an isomorphism of \'etale fundamental groups $\pi_1^{\et}(S, \ol{s}') \iso \pi_1^{\et}(S, \ol{s})$ via $\phi \mapsto \lambda^{-1} \circ \phi \circ \lambda$. Consequently, the \'etale fundamental group of a connected scheme is independent of the basepoint, up to non-canonical isomorphism.
+\end{prop}
+\begin{proof}
+	The latter observation follows from Proposition \ref{prop:isomorphic_fibre_functors}. For the former it suffices to note that, since $\lambda$ is a natural isomorphism, we can do the same thing for $\lambda^{-1} : \Fib_{\ol{s}'} \ISO \Fib_{\ol{s}}$ to obtain an inverse homomorphism of \'etale fundamental groups.
+\end{proof}
+
+\begin{cor}
+	\label{cor:abelian_variety_canonical_efg}
+	If $S$ is a connected scheme and $\pi_1^{\et}(S, \ol{s})$ is abelian for \emph{some} geometric point $\ol{s}$, then $\pi_1^{\et}(S)$ is independent of the basepoint (up to canonical isomorphism).
+\end{cor}
+\begin{proof}
+	Let $\ol{s}, \ol{s}'$ be two geometric points of $S$ and $\lambda, \lambda' : \Fib_{\ol{s}} \ISO \Fib_{\ol{s}'}$ their associated homomorphisms. These induce isomorphisms $\Lambda, \Lambda' : \pi_1(S, \ol{s}') \iso \pi_1(S, \ol{s})$, then $\Lambda \circ (\Lambda')^{-1}$ induces an inner automorphism of $\pi_1(S, \ol{s})$. If $\pi_1(S, \ol{s})$ is abelian, then any inner automorphism is the identity, and thus $\Lambda = \Lambda'$. Consequently, $\pi_1^{\et}(S, \ol{s})$ and $\pi_1^{\et}(S, \ol{s}')$ are canonically isomorphic for any choice of geometric points $\ol{s}, \ol{s}'$.
+\end{proof}
+
+\subsubsection{Functoriality of the \'etale fundamental group}
+\label{subsubsec:4_2_1_functoriality}
+In much the same way that the topological $\pi_1$ is functorial, the algebraic $\pi_1^{\et}$ is functorial too.
+\begin{prop}
+	Let $\phi : S \to S'$ be a morphism of schemes, $\ol{s} : \Spec(\Omega) \to S$ a geometric point, and $\ol{s}' = \phi \circ \ol{s}$ the corresponding goemetric point. Then there exists a canonical homomorphism $\phi_* : \pi_1^{\et}(S, \ol{s}) \to \pi_1^{\et}(S', \ol{s}')$.
+\end{prop}
+\begin{proof}
+	Consider the functor $\text{BC}_{S', S} : \Fet_{S'} \to \Fet_{S}$ given by $\text{BC}_{S', S}(X') := X' \times_{S'} S$. One then checks that $\Fib_{\ol{s}'} = \Fib_{\ol{s}} \circ \text{BC}_{S', S}$. Thus, each automorphism of $\Fib_{\ol{s}}$ canonically induces an automorphism of $\Fib_{\ol{s}'}$ via this equality, and consequently we obtain a homomorphism $\phi_* : \pi_1^{\et}(S, \ol{s}) \to \pi_1^{\et}(S', \ol{s}')$.
+\end{proof}

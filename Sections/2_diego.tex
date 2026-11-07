@@ -504,9 +504,11 @@ These definitions are all a bit abstract, so to give some intuition we'll see wh
 Since morphisms of varieties are polynomial maps, the map $f : Y \to X$ induces a map $f:Y^\text{an} \to X^\text{an}$ of manifolds. Let $q \in Y^\text{an}$ be a point and $p = f(q)$, both considered closed subvarieties of $Y$ and $X$ respectively which we may identify with $\Spec(\C)$. We will look at what both the `unramified' and `smooth' condition mean for this map $f: Y^\text{an} \to X^\text{an}$. 
 
 \paragraph{Unramified:} Since dualising vector spaces $V \mapsto V^\vee$ is an involution, we get a series of identifications 
+\mathversion{normal2}
 \[
 	\Omega^1_{X \mid p} = \Omega^1_{\ints(X) \mid \C} = \Hom_{\C}(\Omega^1_{\ints(X) \mid \C}, \C)^\vee = \mathrm{Der}_\C(\ints(X), \C)^\vee = T_p^* X^\text{an}
 \] 
+\mathversion{normal}
 where $T_p^*X^\text{an}$ denotes the cotangent space of $X^\text{an}$ at $p$, and similarly $\Omega^1_{Y\mid q} = T_q^* Y^\text{an}$. Then the canonical exact sequence induced by the map\footnote{\Exc. Look back at Example \ref{eg:kahler_differentials_rings}(i) to see if you can figure out what the map is yourself :)} $\Omega^1_{X \mid p} \to \Omega^1_{Y \mid p}$ is of the form:
 \[
 	\underbrace{\Omega^1_{X \mid p}}_{T_p^*X^\text{an}} \longrightarrow \underbrace{\Omega^1_{Y \mid q}}_{T_q^*Y^\text{an}} \longrightarrow \Omega^1_{Y \mid X} \longrightarrow 0,
