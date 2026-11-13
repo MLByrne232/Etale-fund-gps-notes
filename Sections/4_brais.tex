@@ -1,5 +1,9 @@
 \section{Geometric points and the \'etale fundamental group}
 \label{sec:4_efg}
+
+\paragraph{Speaker:} \emph{Brais Gerpe Vilas}
+
+
 In this section we will build to a definition of the \'etale fundamental group analogous to that of \S\ref{sec:3_pi_1_as_Aut(Fib)}. Namely, for $S$ a scheme, we will consider the category $\Fet_S$ of finite \'etale covers of $S$ and associate to it a fibre functor; the \'etale fundamental group will then be the automorphism group of this fibre functor.
 
 
@@ -14,6 +18,7 @@ In order to complete our construction, we will need a good notion of the \emph{f
 \end{defn}
 
 \begin{eg}
+	\label{eg:4.2}
 	\begin{enumerate}[(i)]
 		\item Let $S := \Spec(\C[t,t^{-1}]) = \A^1_{\C} \setminus\{0\}$ and $X := \Spec(\C[x,x^{-1}]) = \A^1_\C \setminus \{0\}$, considered with the finite \'etale cover $\phi_n : X \to S$ given by $\phi_n(z) := z^n$ (which is induced by $\ints(S) \mono \ints(X);\, t \mapsto x^n$). Consider the geometric point $\ol{s} : \Spec(\C) \mono S$ associated to the evaluation map $\ev_1 : \C[t,t^{-1}] \epi \C$ at $1$. Using Proposition \ref{prop:fibre_product_affine_schemes}, we may then compute that the geometric fibre $\Fib_{\ol{s}}(X)$ of $\phi_n$ is given by 
 		\[
@@ -61,7 +66,7 @@ Now that we have a fibre functor, we can use our reinterpretation of the usual f
 	Let $S$ be a scheme, and $\overline{s} : \Spec(\Omega) \to S$ a geometric point. The \bemph{\'etale fundamental group} of $S$ with respect to $\overline{s}$, denoted $\pi_1^{\et}(S, \overline{s})$, is the automorphism group of the fibre functor $\Fib_{\overline{s}} : \Fet_S \to \Set$.
 \end{defn}
 
-We will see later that this group carries a canonical topology (the \emph{Krull} topology), but for now we can just view it as a group. We get 
+We will see later that this group carries a canonical topology (cf. \S\ref{subsec:5_3_profinite_groups}), but for now we can just view it as a group. We get 
 
 \begin{prop}
 	\label{prop:etale_monodromy_action}
@@ -71,7 +76,7 @@ We will see later that this group carries a canonical topology (the \emph{Krull}
 \paragraph{Notation.} We may write $\Aut(X/S)$ or $\Aut_S(X)$ for the $\Fet_S$-automorphism group of $X$.
 
 \begin{proof}
-	The first observation is essentially by definition of natural transformations: to each $\eta \in \Aut(\Fib_{\ol{s}})$, we may take the action of $\eta$ on $X$ to be by its $X$-component $\eta_X \in \Aut(\Fib_{\ol{s}}(X))$. The continuity of the action with respect to the Krull topology will be seen in the next talk (it will follow immediately from the fact that $\Fib_S$ is pro-representable). Let $G$ denote the image of $\pi_1^{\et}(S, \ol{s})$ in $\Aut_{\Set}(\Fib_{\ol{s}}(X))$. It is clear that there is a homomorphism $\Aut(X/S) \to G$ by restricting each $\phi \in \Aut(X/S)$ to fibres. For the converse, it shall suffice to prove this in the case that $X=\Spec(B)$ and $S=\Spec(A)$ are affine. In such a case, the geometric fibre of $X$ is in bijection with the generators of $B$ over $A$, and thus automorphisms of the fibre correspond to automorphisms of $B$ as an $A$-algebra. The equivalence of categories $\mathbf{CAlg}_A^\text{op} \simeq \mathbf{AffSch}_S$ thus tells us that each automorphism of the geometric fibre of $X$ gives us a $\Fet_S$-automorphism of $X$.
+	The first observation is essentially by definition of natural transformations: to each $\eta \in \Aut(\Fib_{\ol{s}})$, we may take the action of $\eta$ on $X$ to be by its $X$-component $\eta_X \in \Aut(\Fib_{\ol{s}}(X))$. The continuity of the action with respect to the Krull topology will be seen in the next talk (it will follow immediately from the fact that $\Fib_{\ol{s}}$ is pro-representable). Let $G$ denote the image of $\pi_1^{\et}(S, \ol{s})$ in $\Aut_{\Set}(\Fib_{\ol{s}}(X))$. It is clear that there is a homomorphism $\Aut(X/S) \to G$ by restricting each $\phi \in \Aut(X/S)$ to fibres. For the converse, it shall suffice to prove this in the case that $X=\Spec(B)$ and $S=\Spec(A)$ are affine. In such a case, the geometric fibre of $X$ is in bijection with the generators of $B$ over $A$, and thus automorphisms of the fibre correspond to automorphisms of $B$ as an $A$-algebra. The equivalence of categories $\mathbf{CAlg}_A^\text{op} \simeq \mathbf{AffSch}_S$ thus tells us that each automorphism of the geometric fibre of $X$ gives us a $\Fet_S$-automorphism of $X$.
 \end{proof}
 
 As a consequence of this proposition, we may now think of $\Fib_{\ol{s}}$ as a functor 
@@ -101,6 +106,7 @@ Much as in the case of usual fundamental groups, changing basepoints corresponds
 \label{subsubsec:4_2_1_functoriality}
 In much the same way that the topological $\pi_1$ is functorial, the algebraic $\pi_1^{\et}$ is functorial too.
 \begin{prop}
+	\label{prop:functoriality_of_pi1et}
 	Let $\phi : S \to S'$ be a morphism of schemes, $\ol{s} : \Spec(\Omega) \to S$ a geometric point, and $\ol{s}' = \phi \circ \ol{s}$ the corresponding goemetric point. Then there exists a canonical homomorphism $\phi_* : \pi_1^{\et}(S, \ol{s}) \to \pi_1^{\et}(S', \ol{s}')$.
 \end{prop}
 \begin{proof}
